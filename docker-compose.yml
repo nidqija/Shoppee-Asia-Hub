@@ -1,0 +1,20 @@
+services:
+    mailpit:
+        image: axllent/mailpit:latest
+        ports:
+            - 127.0.0.1:1025:1025
+            - 127.0.0.1:8025:8025
+        restart: unless-stopped
+    postgres:
+        environment:
+            POSTGRES_DB: shoppee-asia-db
+            POSTGRES_PASSWORD: postgrespassword
+            POSTGRES_USER: postgres
+        image: postgres:16-alpine
+        ports:
+            - 127.0.0.1:5430:5432
+        restart: unless-stopped
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+volumes:
+    postgres_data: {}
