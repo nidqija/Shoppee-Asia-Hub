@@ -20,13 +20,14 @@ class AuthController extends Controller
             'phone_number' => 'required|string|unique:central.users,phone_number',
             'home_region' => 'required|string',
             'role' => 'required|string|in:admin,user',
+            
         ]);
 
         $user = User::create([
             'email' => $validated['email'],
             'password' => $validated['password'],
             'phone_number' => $validated['phone_number'],
-            'home_region' => $validated['home_region'],
+            'home_region' => strtoupper($validated['home_region']),
             'role' => $validated['role'],
         ]);
 

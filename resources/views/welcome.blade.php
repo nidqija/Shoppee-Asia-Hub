@@ -159,8 +159,8 @@
                                     <label for="reg-role" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Account Type</label>
                                     <select id="reg-role" name="role" required
                                         class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
-                                        <option value="buyer">Buyer</option>
-                                        <option value="seller">Seller / Merchant</option>
+                                        <option value="admin">admin</option>
+                                        <option value="user">User</option>
                                     </select>
                                 </div>
                             </div>
@@ -287,21 +287,106 @@
                 alertBox.classList.remove('hidden');
             }
 
-            function handleClientLogin(e) {
+            async function handleClientLogin(e) {
                 // Client-side hook: form will submit or you can attach your fetch() call here
-                console.log('Login form submitted');
+                e.preventDefault();
+                
+
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const submitButton = document.getElementById('loginBtn');
+
+                submitDisabled = true;
+                submitButton.textContent = 'Signing In...';
+
+                try {
+                    const response = await fetch('api/auth/signin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        showAlert('Logged in successfully!', false);
+                        
+                    } else {
+                        const errorMessage = result.message || 'An error occurred. Please try again.';
+                        showAlert(errorMessage);
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    showAlert('An unexpected error occurred. Please try again later.');
+                } finally {
+                    submitDisabled = false;
+                    submitButton.textContent = 'Sign In';
+                }
             }
 
-            function handleClientRegister(e) {
-                const pwd = document.getElementById('reg-password').value;
-                const confirm = document.getElementById('reg-confirm').value;
+            async function handleClientRegister(e) {
+                e.preventDefault();
 
-                if (pwd !== confirm) {
-                    e.preventDefault();
-                    showAlert('Passwords do not match. Please check again.');
-                    return false;
+                const email = document.getElementById('reg-email').value;
+                const phone_number = document.getElementById('reg-phone').value;
+                const home_region = document.getElementById('reg-region').value;
+                const role = document.getElementById('reg-role').value;
+                const password = document.getElementById('reg-password').value;
+                const confirm_password = document.getElementById('reg-confirm').value;
+                const submitButton = document.getElementById('regBtn');
+
+                if (password !== confirm_password) {
+                    showAlert('Passwords do not match. Please try again.');
+                    return;
                 }
-                console.log('Register form submitted');
+
+                submitButton.disabled = true;
+                submitButton.textContent = 'Creating Account...';
+
+                try {
+                    const response = await fetch('api/auth/signup' , {
+                        method : 'POST',
+                        headers : {
+                            'Content-Type' : 'application/json',
+                            'Accept' : 'application/json'
+                        },
+
+                        body : JSON.stringify({
+                           email : email,
+                            password : password,
+                            phone_number : phone_number,
+                            home_region : home_region,
+                            role : role
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        showAlert('Account created successfully! Please log in.', false);
+                        toggleForm();
+                    } else {
+                        const errorMessage = result.message || 'An error occurred. Please try again.';
+                        showAlert(errorMessage);
+                    }
+                } catch(error) {
+                    console.error('Error during registration:', error);
+                    showAlert('An unexpected error occurred. Please try again later.');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Create Account';
+                }
+
+
+
+                // Here you would typically send a request to your API
+                console.log('Register form submitted', { email, password, phoneNumber });
             }
         </script>
     </body>
