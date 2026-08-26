@@ -159,7 +159,7 @@
                                     <label for="reg-role" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Account Type</label>
                                     <select id="reg-role" name="role" required
                                         class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
-                                        <option value="admin">admin</option>
+                                        <option value="seller">Seller</option>
                                         <option value="user">User</option>
                                     </select>
                                 </div>
@@ -318,7 +318,13 @@
                         showAlert('Logged in successfully!', false);
                         localStorage.setItem('auth_token', result.data.access_token);
                         localStorage.setItem('user' , JSON.stringify(result.data.user));
-                        window.location.href = '/home';
+
+                        if (result.data.user.role === 'seller') {
+                            window.location.href = '/seller-home';
+                        } else {
+                            window.location.href = '/home';
+                        }
+                       
                         
                     } else {
                         const errorMessage = result.message || 'An error occurred. Please try again.';

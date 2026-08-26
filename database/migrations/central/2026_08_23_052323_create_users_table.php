@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('home_region');
             $table->string('phone_number')->unique();
-            $table->enum('role', ['admin', 'user'])->default('user');
+            $table->enum('role', ['seller', 'user'])->default('user');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
