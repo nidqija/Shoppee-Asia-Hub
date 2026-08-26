@@ -85,7 +85,7 @@
             <div class="bg-gradient-to-r from-orange-500 via-shopee to-red-600 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
                 <div class="relative z-10 max-w-2xl">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white backdrop-blur mb-3">
-                        ⚡ Connected to <span id="heroRegion" class="uppercase">--</span> Shard
+                        ⚡ Connected to <span id="heroRegion" class="uppercase">--</span> Region!
                     </span>
                     <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
                         Welcome back, <span id="heroEmail" class="underline decoration-white/40">Shopper</span>!
@@ -111,17 +111,32 @@
                 </div>
 
                 <!-- Shard Switcher Tabs -->
-                <div class="inline-flex p-1 bg-gray-100 rounded-lg text-xs font-semibold gap-1">
-                    <button id="btnShardMY" class="px-3 py-1.5 rounded-md text-gray-700 hover:text-gray-900 transition">
-                        Malaysia (MY)
-                    </button>
-                    <button id="btnShardSG" class="px-3 py-1.5 rounded-md text-gray-700 hover:text-gray-900 transition">
-                        Singapore (SG)
-                    </button>
-                    <button id="btnShardGlobal" class="px-3 py-1.5 rounded-md text-gray-700 hover:text-gray-900 transition">
-                        All Regions
-                    </button>
-                </div>
+                <div class="relative inline-block">
+                    <select 
+                        id="categoryDropdown"
+                        onchange="(() => {
+                            const selectedCategory = this.value;
+                            console.log('Selected category:', selectedCategory);
+                            // Example: filter products or trigger a custom event
+                            const event = new CustomEvent('categoryChanged', { detail: selectedCategory });
+                            window.dispatchEvent(event);
+                        })()"
+                        class="appearance-none bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold py-2 pl-3 pr-8 rounded-lg border border-transparent focus:border-shopee focus:bg-white focus:outline-none transition cursor-pointer"
+                    >
+                        <option value="all">All Categories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="home-living">Home & Living</option>
+                        <option value="beauty">Health & Beauty</option>
+                    </select>
+                    
+                    <!-- Custom Dropdown Arrow Icon -->
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+</div>
             </div>
 
             <!-- Status & Alert Messages -->
@@ -200,7 +215,7 @@
                 
                 const userRegion = (user.home_region || 'MY').toUpperCase();
                 if (regionBadgeEl) {
-                    regionBadgeEl.textContent = `${userRegion} Shard`;
+                    regionBadgeEl.textContent = `${userRegion}`;
                     regionBadgeEl.classList.remove('hidden');
                 }
                 if (heroRegionEl) heroRegionEl.textContent = userRegion;
@@ -293,43 +308,12 @@
                     }
                 };
 
-                // 5. Setup Tab Styling & Button Listeners
-                const btnMY = document.getElementById('btnShardMY');
-                const btnSG = document.getElementById('btnShardSG');
-                const btnGlobal = document.getElementById('btnShardGlobal');
-                const buttons = [btnMY, btnSG, btnGlobal];
-
-                const setActiveTab = (activeBtn) => {
-                    buttons.forEach(btn => {
-                        if (btn === activeBtn) {
-                            btn.className = 'px-3 py-1.5 rounded-md bg-white text-shopee shadow-xs font-bold';
-                        } else {
-                            btn.className = 'px-3 py-1.5 rounded-md text-gray-600 hover:text-gray-900 transition font-medium';
-                        }
-                    });
-                };
-
-                btnMY?.addEventListener('click', () => {
-                    setActiveTab(btnMY);
-                    loadProducts('/api/products', 'my');
-                });
-
-                btnSG?.addEventListener('click', () => {
-                    setActiveTab(btnSG);
-                    loadProducts('/api/products', 'sg');
-                });
-
-                btnGlobal?.addEventListener('click', () => {
-                    setActiveTab(btnGlobal);
-                    loadProducts('/api/products/global', null);
-                });
+               
 
                 // 6. Initial Load based on User's Home Region
                 if (userRegion === 'SG') {
-                    setActiveTab(btnSG);
                     loadProducts('/api/products', 'sg');
                 } else {
-                    setActiveTab(btnMY);
                     loadProducts('/api/products', 'my');
                 }
             })();
