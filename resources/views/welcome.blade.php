@@ -316,6 +316,9 @@
 
                     if (response.ok) {
                         showAlert('Logged in successfully!', false);
+                        localStorage.setItem('auth_token', result.data.access_token);
+                        localStorage.setItem('user' , JSON.stringify(result.data.user));
+                        window.location.href = '/home';
                         
                     } else {
                         const errorMessage = result.message || 'An error occurred. Please try again.';

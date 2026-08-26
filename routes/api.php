@@ -25,3 +25,5 @@ Route::prefix('products') -> group(function() {
     Route::get('/global' , [ProductController::class, 'indexGlobal']);
 });
 
+
+
