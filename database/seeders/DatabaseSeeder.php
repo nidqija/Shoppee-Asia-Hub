@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
             'price' => 100.00,
             'region_code' => 'MY',
             'category_slug' => 'electronics',
+            'stock_quantity' => 100,
             'status' => 'active',
         ]);
 
@@ -75,6 +76,7 @@ class DatabaseSeeder extends Seeder
             'price' => 150.00,
             'region_code' => 'SG',
             'category_slug' => 'fashion',
+            'stock_quantity' => 50,
             'status' => 'active',
         ]);
 

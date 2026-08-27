@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ config('app.name', 'Store') }} - Sign In & Register</title>
+        <title>{{ config('app.name', 'Store') }} - Sign In & Sign Up</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -317,7 +317,8 @@
                     if (response.ok) {
                         showAlert('Logged in successfully!', false);
                         localStorage.setItem('auth_token', result.data.access_token);
-                        localStorage.setItem('user' , JSON.stringify(result.data.user));
+                        localStorage.setItem('user' , JSON.stringify(result.data.user.email));
+                        localStorage.setItem('home_region', JSON.stringify(result.data.user.home_region));
 
                         if (result.data.user.role === 'seller') {
                             window.location.href = '/seller-home';

@@ -10,8 +10,14 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/global', [ProductController::class, 'indexGlobal']);
+
+Route::prefix('products')->group(function () {
+    Route::get('/global', [ProductController::class, 'indexGlobal']);
+    Route::post('/add', [ProductController::class, 'store']);
+});
+
+
+
 
 // Route registry for authentication related endpoints
 Route::prefix('auth')-> group(function() {
