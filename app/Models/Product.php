@@ -16,7 +16,9 @@ class Product extends Model {
         'description',
         'price',
         'category_slug',
-        'status'
+        'stock_quantity',
+        'status',
+        'region_code',
     ];
 
     

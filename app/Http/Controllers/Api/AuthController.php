@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
             'phone_number' => 'required|string|unique:central.users,phone_number',
             'home_region' => 'required|string',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:seller,user',
             
         ]);
 
