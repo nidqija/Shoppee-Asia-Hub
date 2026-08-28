@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('region_code');
             $table->integer('stock_quantity')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->uuid('seller_id');
             $table->timestamps();
         });
     }

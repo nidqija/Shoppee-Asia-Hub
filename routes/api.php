@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('products')->group(function () {
     Route::get('/global', [ProductController::class, 'indexGlobal']);
+    Route::get('/{id}', [ProductController::class, 'show']);
     Route::post('/add', [ProductController::class, 'store']);
 });
 
