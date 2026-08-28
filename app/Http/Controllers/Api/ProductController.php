@@ -98,6 +98,7 @@ class ProductController extends Controller
             $shard = $request->input('shard', $this->resolveShardConnection($validated['region_code']));
 
             // create a new product instance and set the connection to the determined shard
+            // this will open a transaction on the correct database shard and save the product in that shard
             $product = (new Product())->setConnection($shard);
             $product->fill([
                 'title'          => $validated['title'],
@@ -137,5 +138,7 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+    
       
 }

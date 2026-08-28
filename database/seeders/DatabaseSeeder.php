@@ -67,6 +67,7 @@ class DatabaseSeeder extends Seeder
             'category_slug' => 'electronics',
             'stock_quantity' => 100,
             'status' => 'active',
+            'seller_id' => $mySeller->id,
         ]);
 
         DB::setDefaultConnection('shard_sg');
@@ -78,6 +79,7 @@ class DatabaseSeeder extends Seeder
             'category_slug' => 'fashion',
             'stock_quantity' => 50,
             'status' => 'active',
+            'seller_id' => $sgSeller->id,
         ]);
 
         
