@@ -17,7 +17,7 @@ docker compose down
 docker ps
 
 # View database container logs
-docker logs 8b039ec77a2e --tail 50 -f
+docker logs 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 --tail 50 -f
 ```
 
 ### Direct PostgreSQL Access (psql)
@@ -25,13 +25,13 @@ PowerShell
 
 ```
 # Connect to Central Database
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-central
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-central
 
 # Connect to Malaysia Shard (Port 5430)
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-shard-my
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-shard-my
 
 # Connect to Singapore Shard (Port 5431)
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-shard-sg
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-shard-sg
 ```
 
 ### Useful psql CLI Commands (Inside psql)
@@ -41,13 +41,13 @@ PowerShell
 
 ```
 # Query Central users table
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-central -c "SELECT id, email, home_region, status FROM users;"
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-central -c "SELECT id, email, home_region, status FROM users;"
 
 # Query Malaysia products table
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-shard-my -c "SELECT id, title, price, category_slug FROM products;"
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-shard-my -c "SELECT id, title, price, category_slug FROM products;"
 
 # Query Singapore products table
-docker exec -it 8b039ec77a2e psql -U postgres -d shoppee-shard-sg -c "SELECT id, title, price, category_slug FROM products;"
+docker exec -it 74c0a1d3cbbffbb952f647960cb71ab1b59d9dd05f22da3bb3b8740f0bf41387 psql -U postgres -d shoppee-shard-sg -c "SELECT id, title, price, category_slug FROM products;"
 ```
 
 ## 2. Laravel Artisan Commands

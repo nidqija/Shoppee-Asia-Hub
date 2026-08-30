@@ -287,14 +287,17 @@
         <script>
             // Auth Guard (Mock)
             const token = localStorage.getItem('auth_token');
-            const user = localStorage.getItem('user');
             const user_home_region = localStorage.getItem('home_region');
+            const user_id = localStorage.getItem('id');
+            const clean_user_id = user_id.replace(/^["']|["']$/g, '');  
+            const clean_home_region = user_home_region.replace(/^["']|["']$/g, '');  
 
-            console.log('Auth Token:', token);
-            console.log('User:', user);
-            console.log('User Home Region:', user_home_region);
+          /*  console.log('Auth Token:', token);
+            console.log('User ID:', clean_user_id);
+            console.log('User Home Region:', clean_home_region);
+            console.log('Raw User ID:', user_id); */
 
-            if (!token || !user) {
+            if (!token || !clean_user_id || !clean_home_region) {
                  window.location.href = "/";
             }
 
@@ -345,7 +348,8 @@
                     category_slug: category,
                     price: price,
                     stock_quantity: stock,
-                    region_code: user_home_region
+                    region_code: clean_home_region,
+                    seller_id: clean_user_id
                 });
 
 
@@ -418,6 +422,44 @@
                     return null;
                 }
             }
+
+
+            async function fetchActiveProductsCount() {
+                try {
+                    const response = await fetch(`/api/products/seller/${clean_user_id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        console.error('API Error Response:', result);
+                        const msg = result.message || JSON.stringify(result.errors || result);
+                        alert(`Error fetching products: ${msg}`);
+                        return;
+                    }
+
+                    if (result && result.data) {
+                        const count = result.count || 0;
+                        document.getElementById('activeProductsCount').textContent = count;
+                        document.getElementById('productShowingText').innerHTML = `Showing ${displayCount} of ${count} products on <strong>shard_my</strong>`;
+                    } else {
+                        console.warn('Unexpected API response structure:', result);
+                    }
+                } catch(error){
+                    console.error('Fetch Execution Error:', error);
+                    alert('Network/Client Error while fetching products: ' + error.message);
+                }
+
+               
+
+            }
+
+            fetchActiveProductsCount();
 
            
         </script>

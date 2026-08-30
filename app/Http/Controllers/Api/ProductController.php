@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
-use illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class ProductController extends Controller
@@ -84,18 +84,27 @@ class ProductController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
+            // validate the client payload to ensure that the required fields are present and valid in terms of data types 
             $validated = $request->validate([
                 'title'          => 'required|string|max:255',
                 'description'    => 'required|string',
                 'price'          => 'required|numeric|min:0',
                 'category_slug'  => 'required|string|max:255',
-                'region_code'    => 'required|string|max:10',
                 'stock_quantity' => 'required|integer|min:0',
+                'seller_id'      => 'required|uuid', // validate that the seller_id is a valid UUID
+                'home_region'    => 'nullable|string|max:10', 
+              
             ]);
+
+            $user = $request->user();
+            $sellerId = $user ? $user->id : $validated['seller_id']; // use the authenticated user's ID if available, otherwise use the provided seller_id 
+            $regionCode = $user ? $user->home_region : strtoupper($validated['home_region'] ?? 'MY'); // use the authenticated user's home region if available, otherwise use the provided home_region or default to 'MY'
+
+
 
             // determine the shard connection based on provided region_code 
             // retrieved from local storage in the frontend and sent in the request body
-            $shard = $request->input('shard', $this->resolveShardConnection($validated['region_code']));
+            $shard = $request->input('shard', $this->resolveShardConnection($validated['home_region'] ?? $regionCode));
 
             // create a new product instance and set the connection to the determined shard
             // this will open a transaction on the correct database shard and save the product in that shard
@@ -105,8 +114,9 @@ class ProductController extends Controller
                 'description'    => $validated['description'],
                 'price'          => $validated['price'],
                 'category_slug'  => $validated['category_slug'],
-                'region_code'    => strtoupper($validated['region_code']),
                 'stock_quantity' => $validated['stock_quantity'],
+                'seller_id'      => $sellerId, // NOTE : only validate via server side and not local storage value setup
+                'region_code'    => strtoupper($regionCode), // store the region code in uppercase for consistency
                 'status'         => 'active',
             ]);
 
@@ -137,6 +147,48 @@ class ProductController extends Controller
                 'line'      => $e->getLine(),
             ], 500);
         }
+    }
+
+
+
+    public function RetrieveProductBySellerId(Request $request , string $seller_id) : JsonResponse {
+            try {
+
+                $user = $request->user();
+
+                $sellerId = $user ? $user->id : trim($seller_id , '"\''); 
+                $regionCode = $user ? $user->home_region : strtoupper($request->input('home_region', 'MY'));
+
+                if(empty($seller_id)) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Seller ID is required',
+                    ], 400);
+                }
+
+                $shard = $this->resolveShardConnection($regionCode);
+
+                $products = Product::on($shard)->where('seller_id', $sellerId)->get();
+
+                return response()->json([
+                    'status' => 'success',
+                    'shard' => $shard,
+                    'connected_database' => DB::connection($shard)->getDatabaseName(),
+                    'count' => $products->count(),
+                    'data' => $products
+                ]);
+
+
+
+            } catch (Throwable $e){
+                return response()->json([
+                    'status' => 'error',
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ], 500);
+            }
     }
 
     
