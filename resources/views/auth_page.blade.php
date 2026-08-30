@@ -316,9 +316,6 @@
 
                     if (response.ok) {
                         showAlert('Logged in successfully!', false);
-                        localStorage.setItem('auth_token', result.data.access_token);
-                        localStorage.setItem('user' , JSON.stringify(result.data.user.email));
-                        localStorage.setItem('home_region', JSON.stringify(result.data.user.home_region));
 
                         if (result.data.user.role === 'seller') {
                             window.location.href = '/seller-home';

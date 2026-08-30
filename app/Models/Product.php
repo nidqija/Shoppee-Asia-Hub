@@ -19,6 +19,7 @@ class Product extends Model {
         'stock_quantity',
         'status',
         'region_code',
+        'seller_id',
     ];
 
     
