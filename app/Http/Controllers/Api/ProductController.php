@@ -157,7 +157,7 @@ class ProductController extends Controller
                 $user = $request->user();
 
                 $sellerId = $user ? $user->id : trim($seller_id , '"\''); 
-                $regionCode = $user ? $user->home_region : strtoupper($request->input('home_region', 'MY'));
+                $regionCode = $user ? $user->home_region : strtoupper($request->header('X-Region', $request->input('home_region', 'MY')));
 
                 if(empty($seller_id)) {
                     return response()->json([
@@ -168,7 +168,7 @@ class ProductController extends Controller
 
                 $shard = $this->resolveShardConnection($regionCode);
 
-                $products = Product::on($shard)->where('seller_id', $sellerId)->get();
+                $products = Product::on($shard)->where('seller_id', $sellerId)->orderBy('created_at', 'desc')->get();
 
                 return response()->json([
                     'status' => 'success',
@@ -189,6 +189,54 @@ class ProductController extends Controller
                     'line' => $e->getLine(),
                 ], 500);
             }
+    }
+
+    public function UpdateProductBySku(Request $request , string $sku) : JsonResponse {
+        try {
+
+                $validated = $request->validate([
+                    'title'          => 'sometimes|required|string|max:255',
+                    'description'    => 'sometimes|required|string',
+                    'price'          => 'sometimes|required|numeric|min:0',
+                    'category_slug'  => 'sometimes|required|string|max:255',
+                    'stock_quantity' => 'sometimes|required|integer|min:0',
+                    'status'         => 'sometimes|required|string|in:active,inactive,archived',
+                ]);
+
+                $user = $request->user();
+                $shard = $this->resolveShardConnection($user ? $user->home_region : strtoupper($request->header('X-Region', $request->input('home_region', 'MY'))));
+
+                $product = Product::on($shard)->where('sku' , $sku)->first();
+
+                if(!$product){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Product not found',
+                    ], 404);
+                }
+
+                $product->fill($validated);
+                $product->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Product updated successfully',
+                    'shard' => $shard,
+                    'connected_database' => DB::connection($shard)->getDatabaseName(),
+                    'data' => $product
+                ]);
+                
+
+        } catch( Throwable $e){
+            return response()->json([
+                'status' => 'error',
+                'exception' => get_class($e),
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+
+            ],500);
+        }
     }
 
     
