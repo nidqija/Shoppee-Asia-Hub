@@ -1,400 +1,436 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#f6f6f6]">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ config('app.name', 'Store') }} - Sign In & Sign Up</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Store') }} - Sign In & Sign Up</title>
 
-        <!-- Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            shopee: {
-                                DEFAULT: '#ee4d2d',
-                                hover: '#d73211',
-                                light: '#fef3f0'
-                            }
-                        },
-                        fontFamily: {
-                            sans: ['Instrument Sans', 'sans-serif'],
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        shopee: {
+                            DEFAULT: '#ee4d2d',
+                            hover: '#d73211',
+                            light: '#fef3f0'
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Instrument Sans', 'sans-serif'],
                     }
                 }
             }
-        </script>
-    </head>
+        }
+    </script>
+</head>
 
-    <body class="h-full font-sans antialiased text-gray-800 flex flex-col justify-between">
-        
-        <!-- Header -->
-        <header class="w-full bg-white border-b border-gray-200 py-4 px-6 md:px-12">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <!-- Brand Logo -->
-                    <a href="{{ url('/') }}" class="flex items-center gap-2">
-                        <div class="w-10 h-10 rounded-lg bg-shopee text-white flex items-center justify-center font-bold text-xl shadow-sm">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                        <span class="text-2xl font-bold tracking-tight text-gray-900">ShopeeAsia</span>
-                    </a>
-                    <span class="hidden md:inline-block text-xl font-medium text-gray-700 pl-4 border-l border-gray-300" id="headerTitle">
-                        Sign In
-                    </span>
-                </div>
+<body class="h-full font-sans antialiased text-gray-800 flex flex-col justify-between">
 
-                <a href="https://help.shopee.com" target="_blank" class="text-sm font-medium text-shopee hover:underline">
-                    Need help?
-                </a>
-            </div>
-        </header>
-
-        <!-- Main Banner & Auth Container -->
-        <main class="flex-grow flex items-center justify-center bg-gradient-to-r from-orange-500 via-shopee to-red-600 px-4 py-8 md:py-12">
-            <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                <!-- Left Column: E-commerce Promo / Illustration (Desktop only) -->
-                <div class="hidden lg:flex lg:col-span-7 flex-col text-white px-5">
-                    <div class="w-20 h-20 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center mb-6 shadow-inner">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <!-- Header -->
+    <header class="w-full bg-white border-b border-gray-200 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <!-- Brand Logo -->
+                <a href="{{ url('/') }}" class="flex items-center gap-2">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-shopee text-white flex items-center justify-center font-bold text-xl shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
-                    <h1 class="text-4xl font-extrabold tracking-tight mb-3">Shop Everywhere in Asia</h1>
-                    <p class="text-lg text-white/90 max-w-lg mb-8 leading-relaxed">
-                        Enjoy free nationwide shipping, multi-region catalogs, and fast local shard checkouts.
+                    <span class="text-2xl font-bold tracking-tight text-gray-900">ShopeeAsia</span>
+                </a>
+                <span class="hidden md:inline-block text-xl font-medium text-gray-700 pl-4 border-l border-gray-300"
+                    id="headerTitle">
+                    Sign In
+                </span>
+            </div>
+
+            <a href="https://help.shopee.com" target="_blank" class="text-sm font-medium text-shopee hover:underline">
+                Need help?
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Banner & Auth Container -->
+    <main
+        class="flex-grow flex items-center justify-center bg-gradient-to-r from-orange-500 via-shopee to-red-600 px-4 py-8 md:py-12">
+        <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            <!-- Left Column: E-commerce Promo / Illustration (Desktop only) -->
+            <div class="hidden lg:flex lg:col-span-7 flex-col text-white px-5">
+                <div
+                    class="w-20 h-20 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight mb-3">Shop Everywhere in Asia</h1>
+                <p class="text-lg text-white/90 max-w-lg mb-8 leading-relaxed">
+                    Enjoy free nationwide shipping, multi-region catalogs, and fast local shard checkouts.
+                </p>
+
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 bg-white/10 rounded-full">✓</span>
+                        <span class="text-sm font-medium">100% Authentic</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 bg-white/10 rounded-full">⚡</span>
+                        <span class="text-sm font-medium">Multi-Region Shards</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 bg-white/10 rounded-full">🛡️</span>
+                        <span class="text-sm font-medium">Safe Checkout</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Authentication Card -->
+            <div class="lg:col-span-5 w-full max-w-md mx-auto">
+                <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 border border-gray-100">
+
+                    <!-- Card Tabs -->
+                    <div class="flex items-center justify-between border-b border-gray-200 mb-6 pb-3">
+                        <h2 class="text-xl font-bold text-gray-900" id="formHeader">Log In</h2>
+                        <button type="button" onclick="toggleForm()"
+                            class="text-sm font-semibold text-shopee hover:text-shopee-hover focus:outline-none"
+                            id="toggleButton">
+                            New here? Sign Up
+                        </button>
+                    </div>
+
+                    <!-- Feedback / Message Box (Client Side) -->
+                    <div id="authAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-medium"></div>
+
+                    <!-- ================= SIGN IN FORM ================= -->
+                    <form id="loginForm" onsubmit="handleClientLogin(event)">
+                        @csrf
+                        <div>
+                            <label for="login-email"
+                                class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Email
+                                Address</label>
+                            <input id="login-email" type="email" name="email" required autofocus
+                                class="w-full mb-4 px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="name@example.com">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label for="login-password"
+                                    class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Password</label>
+                                <a href="#" class="text-xs text-shopee hover:underline">Forgot password?</a>
+                            </div>
+                            <input id="login-password" type="password" name="password" required
+                                class="w-full mb-4 px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="••••••••">
+                        </div>
+
+                        <div class="flex items-center mb-5">
+                            <input id="remember_me" type="checkbox" name="remember"
+                                class="h-4 w-4 text-shopee focus:ring-shopee border-gray-300 rounded">
+                            <label for="remember_me" class="ml-2 block text-xs text-gray-600">Remember this
+                                device</label>
+                        </div>
+
+                        <button type="submit" id="loginBtn"
+                            class="w-full bg-shopee hover:bg-shopee-hover text-white font-semibold py-3 px-4 rounded-lg shadow uppercase text-sm tracking-wide transition duration-150 ease-in-out">
+                            Log In
+                        </button>
+                    </form>
+
+                    <!-- ================= SIGN UP FORM ================= -->
+                    <form id="registerForm" onsubmit="handleClientRegister(event)" class="space-y-3 hidden">
+                        @csrf
+                        <div>
+                            <label for="reg-email"
+                                class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Email
+                                Address</label>
+                            <input id="reg-email" type="email" name="email" required
+                                class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="name@example.com">
+                        </div>
+
+                        <!-- Home Region & Role Selectors -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="reg-region"
+                                    class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Home
+                                    Region</label>
+                                <select id="reg-region" name="home_region" required
+                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
+                                    <option value="MY">Malaysia (MY)</option>
+                                    <option value="SG">Singapore (SG)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="reg-role"
+                                    class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Account
+                                    Type</label>
+                                <select id="reg-role" name="role" required
+                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
+                                    <option value="seller">Seller</option>
+                                    <option value="user">User</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="reg-phone"
+                                class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Phone
+                                Number</label>
+                            <input id="reg-phone" type="tel" name="phone_number" required
+                                class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="+60123456789">
+                        </div>
+
+                        <div>
+                            <label for="reg-password"
+                                class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Password</label>
+                            <input id="reg-password" type="password" name="password" required minlength="8"
+                                class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="Min. 8 characters">
+                        </div>
+
+                        <div>
+                            <label for="reg-confirm"
+                                class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Confirm
+                                Password</label>
+                            <input id="reg-confirm" type="password" name="password_confirmation" required minlength="8"
+                                class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
+                                placeholder="Repeat password">
+                        </div>
+
+                        <button type="submit" id="regBtn"
+                            class="w-full mt-2 bg-shopee hover:bg-shopee-hover text-white font-semibold py-3 px-4 rounded-lg shadow uppercase text-sm tracking-wide transition duration-150 ease-in-out">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <!-- Social Divider -->
+                    <div class="mt-6 relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-xs uppercase">
+                            <span class="bg-white px-2 text-gray-500 font-medium">Or continue with</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Login Buttons -->
+                    <div class="mt-4 grid grid-cols-2 gap-3">
+                        <button type="button"
+                            class="flex items-center justify-center gap-2 border border-gray-300 py-2 px-4 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24">
+                                <path fill="#4285F4"
+                                    d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
+                                <path fill="#34A853"
+                                    d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z" />
+                                <path fill="#FBBC05"
+                                    d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                                <path fill="#EA4335"
+                                    d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                            </svg>
+                            Google
+                        </button>
+                        <button type="button"
+                            class="flex items-center justify-center gap-2 border border-gray-300 py-2 px-4 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
+                            <svg class="w-4 h-4 text-blue-600 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                            Facebook
+                        </button>
+                    </div>
+
+                    <!-- Terms of Service -->
+                    <p class="mt-6 text-center text-xs text-gray-500 leading-relaxed">
+                        By continuing, you agree to our
+                        <a href="#" class="text-shopee underline">Terms of Service</a> &
+                        <a href="#" class="text-shopee underline">Privacy Policy</a>.
                     </p>
-
-                    <!-- Trust Badges -->
-                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-                        <div class="flex items-center gap-2">
-                            <span class="p-2 bg-white/10 rounded-full">✓</span>
-                            <span class="text-sm font-medium">100% Authentic</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="p-2 bg-white/10 rounded-full">⚡</span>
-                            <span class="text-sm font-medium">Multi-Region Shards</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="p-2 bg-white/10 rounded-full">🛡️</span>
-                            <span class="text-sm font-medium">Safe Checkout</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Authentication Card -->
-                <div class="lg:col-span-5 w-full max-w-md mx-auto">
-                    <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 border border-gray-100">
-                        
-                        <!-- Card Tabs -->
-                        <div class="flex items-center justify-between border-b border-gray-200 mb-6 pb-3">
-                            <h2 class="text-xl font-bold text-gray-900" id="formHeader">Log In</h2>
-                            <button type="button" onclick="toggleForm()" class="text-sm font-semibold text-shopee hover:text-shopee-hover focus:outline-none" id="toggleButton">
-                                New here? Sign Up
-                            </button>
-                        </div>
-
-                        <!-- Feedback / Message Box (Client Side) -->
-                        <div id="authAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-medium"></div>
-
-                        <!-- ================= SIGN IN FORM ================= -->
-                        <form id="loginForm" onsubmit="handleClientLogin(event)">
-                            @csrf
-                            <div>
-                                <label for="login-email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Email Address</label>
-                                <input id="login-email" type="email" name="email" required autofocus
-                                    class="w-full mb-4 px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="name@example.com">
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label for="login-password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Password</label>
-                                    <a href="#" class="text-xs text-shopee hover:underline">Forgot password?</a>
-                                </div>
-                                <input id="login-password" type="password" name="password" required
-                                    class="w-full mb-4 px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="••••••••">
-                            </div>
-
-                            <div class="flex items-center mb-5">
-                                <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 text-shopee focus:ring-shopee border-gray-300 rounded">
-                                <label for="remember_me" class="ml-2 block text-xs text-gray-600">Remember this device</label>
-                            </div>
-
-                            <button type="submit" id="loginBtn" class="w-full bg-shopee hover:bg-shopee-hover text-white font-semibold py-3 px-4 rounded-lg shadow uppercase text-sm tracking-wide transition duration-150 ease-in-out">
-                                Log In
-                            </button>
-                        </form>
-
-                        <!-- ================= SIGN UP FORM ================= -->
-                        <form id="registerForm" onsubmit="handleClientRegister(event)" class="space-y-3 hidden">
-                            @csrf
-                            <div>
-                                <label for="reg-email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Email Address</label>
-                                <input id="reg-email" type="email" name="email" required
-                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="name@example.com">
-                            </div>
-
-                            <!-- Home Region & Role Selectors -->
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label for="reg-region" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Home Region</label>
-                                    <select id="reg-region" name="home_region" required
-                                        class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
-                                        <option value="MY">Malaysia (MY)</option>
-                                        <option value="SG">Singapore (SG)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="reg-role" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Account Type</label>
-                                    <select id="reg-role" name="role" required
-                                        class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition">
-                                        <option value="seller">Seller</option>
-                                        <option value="user">User</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="reg-phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Phone Number</label>
-                                <input id="reg-phone" type="tel" name="phone_number" required
-                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="+60123456789">
-                            </div>
-
-                            <div>
-                                <label for="reg-password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Password</label>
-                                <input id="reg-password" type="password" name="password" required minlength="8"
-                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="Min. 8 characters">
-                            </div>
-
-                            <div>
-                                <label for="reg-confirm" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Confirm Password</label>
-                                <input id="reg-confirm" type="password" name="password_confirmation" required minlength="8"
-                                    class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-shopee focus:border-transparent transition"
-                                    placeholder="Repeat password">
-                            </div>
-
-                            <button type="submit" id="regBtn" class="w-full mt-2 bg-shopee hover:bg-shopee-hover text-white font-semibold py-3 px-4 rounded-lg shadow uppercase text-sm tracking-wide transition duration-150 ease-in-out">
-                                Create Account
-                            </button>
-                        </form>
-
-                        <!-- Social Divider -->
-                        <div class="mt-6 relative">
-                            <div class="absolute inset-0 flex items-center">
-                                <div class="w-full border-t border-gray-200"></div>
-                            </div>
-                            <div class="relative flex justify-center text-xs uppercase">
-                                <span class="bg-white px-2 text-gray-500 font-medium">Or continue with</span>
-                            </div>
-                        </div>
-
-                        <!-- Social Login Buttons -->
-                        <div class="mt-4 grid grid-cols-2 gap-3">
-                            <button type="button" class="flex items-center justify-center gap-2 border border-gray-300 py-2 px-4 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24">
-                                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
-                                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                                </svg>
-                                Google
-                            </button>
-                            <button type="button" class="flex items-center justify-center gap-2 border border-gray-300 py-2 px-4 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
-                                <svg class="w-4 h-4 text-blue-600 fill-current" viewBox="0 0 24 24">
-                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                                </svg>
-                                Facebook
-                            </button>
-                        </div>
-
-                        <!-- Terms of Service -->
-                        <p class="mt-6 text-center text-xs text-gray-500 leading-relaxed">
-                            By continuing, you agree to our 
-                            <a href="#" class="text-shopee underline">Terms of Service</a> & 
-                            <a href="#" class="text-shopee underline">Privacy Policy</a>.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p>&copy; {{ date('Y') }} {{ config('app.name', 'ShopeeAsia') }}. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:underline">About Us</a>
-                    <a href="#" class="hover:underline">Buyer Protection</a>
-                    <a href="#" class="hover:underline">Seller Centre</a>
-                    <a href="#" class="hover:underline">Contact</a>
                 </div>
             </div>
-        </footer>
 
-        <!-- Client-Side Form Toggle & Helper Script -->
-        <script>
-            let isLogin = true;
+        </div>
+    </main>
 
-            function toggleForm() {
-                isLogin = !isLogin;
-                const loginForm = document.getElementById('loginForm');
-                const regForm = document.getElementById('registerForm');
-                const formHeader = document.getElementById('formHeader');
-                const headerTitle = document.getElementById('headerTitle');
-                const toggleBtn = document.getElementById('toggleButton');
-                const alertBox = document.getElementById('authAlert');
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'ShopeeAsia') }}. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:underline">About Us</a>
+                <a href="#" class="hover:underline">Buyer Protection</a>
+                <a href="#" class="hover:underline">Seller Centre</a>
+                <a href="#" class="hover:underline">Contact</a>
+            </div>
+        </div>
+    </footer>
 
-                // Clear any lingering alert
-                alertBox.classList.add('hidden');
+    <!-- Client-Side Form Toggle & Helper Script -->
+    <script>
+        let isLogin = true;
 
-                if (isLogin) {
-                    loginForm.classList.remove('hidden');
-                    regForm.classList.add('hidden');
-                    formHeader.textContent = 'Log In';
-                    if (headerTitle) headerTitle.textContent = 'Sign In';
-                    toggleBtn.textContent = 'New here? Sign Up';
-                } else {
-                    loginForm.classList.add('hidden');
-                    regForm.classList.remove('hidden');
-                    formHeader.textContent = 'Sign Up';
-                    if (headerTitle) headerTitle.textContent = 'Register';
-                    toggleBtn.textContent = 'Already have an account? Log In';
-                }
+        function toggleForm() {
+            isLogin = !isLogin;
+            const loginForm = document.getElementById('loginForm');
+            const regForm = document.getElementById('registerForm');
+            const formHeader = document.getElementById('formHeader');
+            const headerTitle = document.getElementById('headerTitle');
+            const toggleBtn = document.getElementById('toggleButton');
+            const alertBox = document.getElementById('authAlert');
+
+            // Clear any lingering alert
+            alertBox.classList.add('hidden');
+
+            if (isLogin) {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                formHeader.textContent = 'Log In';
+                if (headerTitle) headerTitle.textContent = 'Sign In';
+                toggleBtn.textContent = 'New here? Sign Up';
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                formHeader.textContent = 'Sign Up';
+                if (headerTitle) headerTitle.textContent = 'Register';
+                toggleBtn.textContent = 'Already have an account? Log In';
             }
+        }
 
-            function showAlert(message, isError = true) {
-                const alertBox = document.getElementById('authAlert');
-                alertBox.textContent = message;
-                alertBox.className = `mb-4 p-3 rounded-lg text-xs font-medium ${
-                    isError 
-                        ? 'bg-red-50 text-red-700 border border-red-200' 
-                        : 'bg-green-50 text-green-700 border border-green-200'
+        function showAlert(message, isError = true) {
+            const alertBox = document.getElementById('authAlert');
+            alertBox.textContent = message;
+            alertBox.className = `mb-4 p-3 rounded-lg text-xs font-medium ${isError
+                    ? 'bg-red-50 text-red-700 border border-red-200'
+                    : 'bg-green-50 text-green-700 border border-green-200'
                 }`;
-                alertBox.classList.remove('hidden');
-            }
+            alertBox.classList.remove('hidden');
+        }
 
-            async function handleClientLogin(e) {
-                // Client-side hook: form will submit or you can attach your fetch() call here
-                e.preventDefault();
-                
+        async function handleClientLogin(e) {
+            // Client-side hook: form will submit or you can attach your fetch() call here
+            e.preventDefault();
 
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                const submitButton = document.getElementById('loginBtn');
 
-                submitDisabled = true;
-                submitButton.textContent = 'Signing In...';
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const submitButton = document.getElementById('loginBtn');
 
-                try {
-                    const response = await fetch('api/auth/signin', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password
-                        })
-                    });
+            submitDisabled = true;
+            submitButton.textContent = 'Signing In...';
 
-                    const result = await response.json();
+            try {
+                const response = await fetch('api/auth/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
 
-                    if (response.ok) {
-                        showAlert('Logged in successfully!', false);
+                const result = await response.json();
 
-                        if (result.data.user.role === 'seller') {
-                            window.location.href = '/seller-home';
-                        } else {
-                            window.location.href = '/home';
-                        }
-                       
-                        
+                if (response.ok) {
+                    showAlert('Logged in successfully!', false);
+                    localStorage.setItem('auth_token', result.data.access_token);
+                    localStorage.setItem('id', result.data.user.id);
+                    localStorage.setItem('user', JSON.stringify(result.data.user));
+                    localStorage.setItem('home_region', result.data.user.home_region || 'MY');
+
+                    if (result.data.user.role === 'seller') {
+                        window.location.href = '/seller-home';
                     } else {
-                        const errorMessage = result.message || 'An error occurred. Please try again.';
-                        showAlert(errorMessage);
+                        window.location.href = '/home';
                     }
-                } catch (error) {
-                    console.error('Error during login:', error);
-                    showAlert('An unexpected error occurred. Please try again later.');
-                } finally {
-                    submitDisabled = false;
-                    submitButton.textContent = 'Sign In';
+                } else {
+                    const errorMessage = result.message || 'An error occurred. Please try again.';
+                    showAlert(errorMessage);
                 }
+            } catch (error) {
+                console.error('Error during login:', error);
+                showAlert('An unexpected error occurred. Please try again later.');
+            } finally {
+                submitDisabled = false;
+                submitButton.textContent = 'Sign In';
+            }
+        }
+
+        async function handleClientRegister(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('reg-email').value;
+            const phone_number = document.getElementById('reg-phone').value;
+            const home_region = document.getElementById('reg-region').value;
+            const role = document.getElementById('reg-role').value;
+            const password = document.getElementById('reg-password').value;
+            const confirm_password = document.getElementById('reg-confirm').value;
+            const submitButton = document.getElementById('regBtn');
+
+            if (password !== confirm_password) {
+                showAlert('Passwords do not match. Please try again.');
+                return;
             }
 
-            async function handleClientRegister(e) {
-                e.preventDefault();
+            submitButton.disabled = true;
+            submitButton.textContent = 'Creating Account...';
 
-                const email = document.getElementById('reg-email').value;
-                const phone_number = document.getElementById('reg-phone').value;
-                const home_region = document.getElementById('reg-region').value;
-                const role = document.getElementById('reg-role').value;
-                const password = document.getElementById('reg-password').value;
-                const confirm_password = document.getElementById('reg-confirm').value;
-                const submitButton = document.getElementById('regBtn');
+            try {
+                const response = await fetch('api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
 
-                if (password !== confirm_password) {
-                    showAlert('Passwords do not match. Please try again.');
-                    return;
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        phone_number: phone_number,
+                        home_region: home_region,
+                        role: role
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert('Account created successfully! Please log in.', false);
+                    toggleForm();
+                } else {
+                    const errorMessage = result.message || 'An error occurred. Please try again.';
+                    showAlert(errorMessage);
                 }
-
-                submitButton.disabled = true;
-                submitButton.textContent = 'Creating Account...';
-
-                try {
-                    const response = await fetch('api/auth/signup' , {
-                        method : 'POST',
-                        headers : {
-                            'Content-Type' : 'application/json',
-                            'Accept' : 'application/json'
-                        },
-
-                        body : JSON.stringify({
-                           email : email,
-                            password : password,
-                            phone_number : phone_number,
-                            home_region : home_region,
-                            role : role
-                        })
-                    });
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        showAlert('Account created successfully! Please log in.', false);
-                        toggleForm();
-                    } else {
-                        const errorMessage = result.message || 'An error occurred. Please try again.';
-                        showAlert(errorMessage);
-                    }
-                } catch(error) {
-                    console.error('Error during registration:', error);
-                    showAlert('An unexpected error occurred. Please try again later.');
-                } finally {
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Create Account';
-                }
-
-
-
-                // Here you would typically send a request to your API
-                console.log('Register form submitted', { email, password, phoneNumber });
+            } catch (error) {
+                console.error('Error during registration:', error);
+                showAlert('An unexpected error occurred. Please try again later.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Create Account';
             }
-        </script>
-    </body>
+
+
+
+            // Here you would typically send a request to your API
+            console.log('Register form submitted', { email, password, phoneNumber });
+        }
+    </script>
+</body>
+
 </html>

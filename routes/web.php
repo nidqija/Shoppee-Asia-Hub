@@ -1,16 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('/', function () {
     return view('auth_page');
-});
+})->name('login');
 
 
-Route::get("/home" , function(){
+Route::get("/home", function () {
     return view('user_home');
 });
 
-Route::get("/seller-home" , function() {
-    return view('seller_home');
-});
+// Put signin route here so it supports session cookies
+Route::post('/api/signin', [AuthController::class, 'signin']);
+
+
+Route::get('/seller-home', [SellerController::class, 'dashboard'])->name('seller.dashboard');
