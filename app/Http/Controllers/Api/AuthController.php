@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signup(Request $request) : JsonResponse{
+    public function signup(Request $request): JsonResponse
+    {
         $validated = $request->validate([
             'email' => 'required|email|unique:central.users,email',
             'password' => 'required|string|min:8',
             'phone_number' => 'required|string|unique:central.users,phone_number',
             'home_region' => 'required|string',
             'role' => 'required|string|in:seller,user',
-            
+
         ]);
 
         $user = User::create([
@@ -50,7 +51,8 @@ class AuthController extends Controller
     }
 
 
-    public function signin(Request $request) : JsonResponse{
+    public function signin(Request $request): JsonResponse
+    {
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
@@ -58,7 +60,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $validated['email'])->first();
 
-        if(!$user || !\Hash::check($validated['password'], $user->password)) {
+        if (!$user || !\Hash::check($validated['password'], $user->password)) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid credentials',
