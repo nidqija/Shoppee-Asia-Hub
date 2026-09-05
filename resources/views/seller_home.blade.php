@@ -59,11 +59,7 @@
                 <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-shopee uppercase">
                     Seller Centre
                 </span>
-                <span id="headerShardBadge"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
-                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> 
-                    <span id="headerShardLabel">shard_my (Port 5430)</span>
-                </span>
+                
             </div>
 
             <!-- Seller Profile & Actions -->
@@ -77,6 +73,12 @@
                     class="text-xs font-semibold text-gray-600 hover:text-shopee border border-gray-200 hover:border-shopee px-3 py-1.5 rounded-md transition cursor-pointer">
                     Sign Out
                 </a>
+
+                 <a href="{{ url('/home') }}" 
+                    class="text-xs font-semibold text-orange-600 hover:text-shopee border border-gray-200 hover:border-shopee px-3 py-1.5 rounded-md transition cursor-pointer">
+                    User Home
+                </a>
+
             </div>
         </div>
     </header>
@@ -115,7 +117,7 @@
         </div>
 
         <!-- Shard Business Metrics -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Inventory Value</p>
                 <p id="totalRevenueMetric" class="text-2xl font-black text-gray-900 mt-1">RM 0.00</p>
@@ -134,11 +136,7 @@
                 <p class="text-[11px] text-orange-600 font-medium mt-1">Across all categories</p>
             </div>
 
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs">
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Target DB Shard</p>
-                <p id="targetShardMetric" class="text-2xl font-black text-blue-600 mt-1">shard_my</p>
-                <p id="targetShardDbMetric" class="text-[11px] text-gray-400 mt-1">PostgreSQL Local Shard</p>
-            </div>
+           
         </div>
 
         <!-- Shard Product Inventory Table -->

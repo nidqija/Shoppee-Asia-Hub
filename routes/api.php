@@ -14,6 +14,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('products')->group(function () {
     Route::get('/global', [ProductController::class, 'indexGlobal']);
     Route::get('/seller/{seller_id}', [ProductController::class, 'RetrieveProductBySellerId']);
+    Route::post('/update/{sku}', [ProductController::class, 'UpdateProductBySku']);
     Route::post('/add', [ProductController::class, 'store']);
     Route::get('/{id}', [ProductController::class, 'show']);
 

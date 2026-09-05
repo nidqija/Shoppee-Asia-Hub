@@ -194,6 +194,7 @@ class ProductController extends Controller
     public function UpdateProductBySku(Request $request , string $sku) : JsonResponse {
         try {
 
+                // validate the client payload to ensure that the required fields are present and valid in terms of data types
                 $validated = $request->validate([
                     'title'          => 'sometimes|required|string|max:255',
                     'description'    => 'sometimes|required|string',
@@ -203,7 +204,10 @@ class ProductController extends Controller
                     'status'         => 'sometimes|required|string|in:active,inactive,archived',
                 ]);
 
+                // retrieve the authenticated user request
                 $user = $request->user();
+
+                // determine the shard connection for the request payload based on home region
                 $shard = $this->resolveShardConnection($user ? $user->home_region : strtoupper($request->header('X-Region', $request->input('home_region', 'MY'))));
 
                 $product = Product::on($shard)->where('sku' , $sku)->first();
@@ -215,9 +219,14 @@ class ProductController extends Controller
                     ], 404);
                 }
 
+                // update the product with the validated data and save it to the database
                 $product->fill($validated);
+
+                // save to db
                 $product->save();
 
+
+                // return message
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Product updated successfully',
