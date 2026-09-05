@@ -210,7 +210,7 @@ class ProductController extends Controller
                 // determine the shard connection for the request payload based on home region
                 $shard = $this->resolveShardConnection($user ? $user->home_region : strtoupper($request->header('X-Region', $request->input('home_region', 'MY'))));
 
-                $product = Product::on($shard)->where('sku' , $sku)->first();
+                $product = Product::on($shard)->where('seller_id' , $sku)->first();
 
                 if(!$product){
                     return response()->json([
