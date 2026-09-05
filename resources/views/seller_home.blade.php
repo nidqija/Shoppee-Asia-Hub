@@ -736,10 +736,73 @@
                 if (e.target === editModal) closeEditModal();
             });
 
-            editProductForm?.addEventListener('submit', (e) => {
+            editProductForm?.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                showToast('Product update saved successfully!');
-                closeEditModal();
+
+                const title = document.getElementById('editProdTitle').value.trim();
+                const desc = document.getElementById('editProdDesc').value.trim();
+                const category = document.getElementById('editProdCategory').value;
+                const price = parseFloat(document.getElementById('editProdPrice').value);
+                const stock = parseInt(document.getElementById('editProdStock').value, 10);
+                
+                
+                if(updateProductBtn){
+                    updateProductBtn.disabled = true;
+                    updateProductBtn.innerHTML = `
+                        <svg class="animate-spin -ml-1 mr-2 h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        <span>Updating...</span>
+                    `;
+                }
+
+                try {
+
+                const response = await fetch(`/api/products/update/${encodeURIComponent(clean_user_id)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'X-Region': clean_home_region
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: desc,
+                        category_slug: category,
+                        price: price.toFixed(2),
+                        stock_quantity: stock,
+                        home_region: clean_home_region,
+                        seller_id: clean_user_id
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    const errMsg = result.message || (result.errors ? Object.values(result.errors).flat().join(', ') : 'Failed to update product');
+                    throw new Error(errMsg);
+                    }   
+
+                if (result.data){
+                    console.log('Product updated successfully:', result.data);
+                    closeEditModal();
+                }
+            
+
+                } catch( err){
+                    console.error('Update product error:', err);
+                    showToast(err.message || 'Error updating product.', false);
+                } finally {
+                    if(updateProductBtn){
+                        updateProductBtn.disabled = false;
+                        updateProductBtn.innerHTML = `<span>Update Product</span>`;
+                    }
+                }
+
+                
+               
             });
 
             // 9. Handle Client-Side Product Creation via JS
