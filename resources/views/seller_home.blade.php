@@ -59,11 +59,7 @@
                 <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-shopee uppercase">
                     Seller Centre
                 </span>
-                <span id="headerShardBadge"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
-                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> 
-                    <span id="headerShardLabel">shard_my (Port 5430)</span>
-                </span>
+                
             </div>
 
             <!-- Seller Profile & Actions -->
@@ -77,6 +73,12 @@
                     class="text-xs font-semibold text-gray-600 hover:text-shopee border border-gray-200 hover:border-shopee px-3 py-1.5 rounded-md transition cursor-pointer">
                     Sign Out
                 </a>
+
+                 <a href="{{ url('/home') }}" 
+                    class="text-xs font-semibold text-orange-600 hover:text-shopee border border-gray-200 hover:border-shopee px-3 py-1.5 rounded-md transition cursor-pointer">
+                    User Home
+                </a>
+
             </div>
         </div>
     </header>
@@ -115,7 +117,7 @@
         </div>
 
         <!-- Shard Business Metrics -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Inventory Value</p>
                 <p id="totalRevenueMetric" class="text-2xl font-black text-gray-900 mt-1">RM 0.00</p>
@@ -134,11 +136,7 @@
                 <p class="text-[11px] text-orange-600 font-medium mt-1">Across all categories</p>
             </div>
 
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs">
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Target DB Shard</p>
-                <p id="targetShardMetric" class="text-2xl font-black text-blue-600 mt-1">shard_my</p>
-                <p id="targetShardDbMetric" class="text-[11px] text-gray-400 mt-1">PostgreSQL Local Shard</p>
-            </div>
+           
         </div>
 
         <!-- Shard Product Inventory Table -->
@@ -738,10 +736,73 @@
                 if (e.target === editModal) closeEditModal();
             });
 
-            editProductForm?.addEventListener('submit', (e) => {
+            editProductForm?.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                showToast('Product update saved successfully!');
-                closeEditModal();
+
+                const title = document.getElementById('editProdTitle').value.trim();
+                const desc = document.getElementById('editProdDesc').value.trim();
+                const category = document.getElementById('editProdCategory').value;
+                const price = parseFloat(document.getElementById('editProdPrice').value);
+                const stock = parseInt(document.getElementById('editProdStock').value, 10);
+                
+                
+                if(updateProductBtn){
+                    updateProductBtn.disabled = true;
+                    updateProductBtn.innerHTML = `
+                        <svg class="animate-spin -ml-1 mr-2 h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        <span>Updating...</span>
+                    `;
+                }
+
+                try {
+
+                const response = await fetch(`/api/products/update/${encodeURIComponent(clean_user_id)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'X-Region': clean_home_region
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: desc,
+                        category_slug: category,
+                        price: price.toFixed(2),
+                        stock_quantity: stock,
+                        home_region: clean_home_region,
+                        seller_id: clean_user_id
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    const errMsg = result.message || (result.errors ? Object.values(result.errors).flat().join(', ') : 'Failed to update product');
+                    throw new Error(errMsg);
+                    }   
+
+                if (result.data){
+                    console.log('Product updated successfully:', result.data);
+                    closeEditModal();
+                }
+            
+
+                } catch( err){
+                    console.error('Update product error:', err);
+                    showToast(err.message || 'Error updating product.', false);
+                } finally {
+                    if(updateProductBtn){
+                        updateProductBtn.disabled = false;
+                        updateProductBtn.innerHTML = `<span>Update Product</span>`;
+                    }
+                }
+
+                
+               
             });
 
             // 9. Handle Client-Side Product Creation via JS

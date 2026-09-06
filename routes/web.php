@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('auth_page');
@@ -18,3 +19,6 @@ Route::post('/api/signin', [AuthController::class, 'signin']);
 
 
 Route::get('/seller-home', [SellerController::class, 'dashboard'])->name('seller.dashboard');
+Route::get('/product-page-id', [ProductController::class, 'renderbyId'])->name('product.renderbyId');
+
+
