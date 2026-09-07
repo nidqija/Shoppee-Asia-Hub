@@ -4,15 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 
+
+
 class ProductController extends Controller{
-    public function renderbyId(Request $request): View
+    public function renderbyId(Request $request , string $id ): View
     {
-        return view('product_page_id');
+
+
+        $product = Product::find($id);
+
+        
+
+        if(!$product){
+            abort(404);
+        }
+
+
+        return view('product_page_id' , compact('product'));
     }
+
+   
 }
 
 

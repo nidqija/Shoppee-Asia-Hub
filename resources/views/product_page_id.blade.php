@@ -38,7 +38,9 @@
     <div class="bg-shopee text-white text-xs py-1.5 px-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-4 text-[11px] opacity-90">
-                <span>📍 Regional Hub: Malaysia (MYR)</span>
+                @if ($product->region_code == "MY")
+                    <span>📍 Regional Hub : Malaysia {{ $product->region_code }}</span>
+                @endif
                 <span>•</span>
                 <span>Free Shipping over RM 40</span>
             </div>
@@ -104,11 +106,9 @@
         <nav class="flex items-center gap-2 text-xs text-gray-500">
             <a href="{{ url('/home') }}" class="hover:text-shopee">Home</a>
             <span>/</span>
-            <span class="hover:text-shopee">Electronics</span>
+            <span class="hover:text-shopee">{{ $product->category_slug }}</span>
             <span>/</span>
-            <span class="hover:text-shopee">Computer Accessories</span>
-            <span>/</span>
-            <span class="text-gray-900 font-medium truncate max-w-xs sm:max-w-md">Ergonomic Mechanical Keyboard (RGB Backlit)</span>
+            <span class="text-gray-900 font-medium truncate max-w-xs sm:max-w-md">{{ $product->title }}</span>
         </nav>
 
         <!-- Product Primary Card -->
@@ -158,7 +158,7 @@
                             <span class="text-xs text-gray-400 font-mono">SKU: PRD-8A4F12E9</span>
                         </div>
                         <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
-                            Ergonomic Mechanical Keyboard (RGB Backlit, Hot-Swappable Switches, Dual Mode Wireless)
+                            {{ $product->title }}
                         </h1>
                     </div>
 
@@ -180,7 +180,7 @@
 
                     <!-- Price Section -->
                     <div class="bg-gray-50/80 rounded-xl p-4 flex items-baseline gap-3">
-                        <span class="text-3xl font-extrabold text-shopee">RM 249.00</span>
+                        <span class="text-3xl font-extrabold text-shopee">RM {{ $product->price }}</span>
                         <span class="text-xs text-gray-400 line-through">RM 329.00</span>
                         <span class="text-xs font-bold text-shopee bg-orange-100 px-2 py-0.5 rounded">-24%</span>
                     </div>
@@ -220,7 +220,7 @@
                                     <span class="px-3 py-1 font-semibold text-gray-800 border-x border-gray-200">1</span>
                                     <span class="px-3 py-1 text-gray-700 cursor-default">+</span>
                                 </div>
-                                <span class="text-gray-400 text-[11px]">84 units available</span>
+                                <span class="text-gray-400 text-[11px]">{{ $product->stock_quantity }} units available</span>
                             </div>
                         </div>
                     </div>
@@ -252,7 +252,7 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h2 class="text-sm font-bold text-gray-900">Official Tech Gear Store</h2>
+                        <h2 class="text-sm font-bold text-gray-900">{{ $product->seller?->email ?? 'Unknown Seller' }}</h2>
                         <span class="px-2 py-0.2 rounded bg-shopee text-white text-[10px] font-semibold">Mall</span>
                     </div>
                     <p class="text-xs text-gray-400 mt-0.5">Active 12 minutes ago • Certified Merchant</p>
@@ -284,7 +284,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-xs">
                     <div class="flex">
                         <span class="w-32 text-gray-400">Category</span>
-                        <span class="text-gray-800 font-medium">Electronics > Keyboards</span>
+                        <span class="text-gray-800 font-medium">{{ $product->category_slug }}</span>
                     </div>
                     <div class="flex">
                         <span class="w-32 text-gray-400">Warranty Period</span>
@@ -315,7 +315,7 @@
             <div class="space-y-3 text-xs leading-relaxed text-gray-700">
                 <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wide">Product Description</h3>
                 <p>
-                    Experience typing bliss with our flagship <strong>Ergonomic Mechanical Keyboard</strong>. Engineered for enthusiasts, software developers, and gamers who demand responsive keystrokes, exceptional ergonomics, and deep acoustics.
+                    {{ $product->description }}
                 </p>
                 <div class="space-y-1.5 pl-4 list-disc">
                     <p>• <strong>Factory Lubed Switches:</strong> Ultra-smooth linear switches out of the box with zero ping or scratchiness.</p>

@@ -272,6 +272,7 @@
                         }
 
                         container.innerHTML = products.map(item => `
+                         <a href="/product-page-id/${item.id}" class="group">
                             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between group">
                                 <div class="h-36 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                                     <span class="text-3xl text-gray-300 group-hover:scale-110 transition duration-300">📦</span>
@@ -297,6 +298,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         `).join('');
 
                     } catch (err) {
