@@ -14,8 +14,7 @@ Route::get("/home", function () {
     return view('user_home');
 });
 
-// Put signin route here so it supports session cookies
-Route::post('/api/signin', [AuthController::class, 'signin']);
+Route::post('/api/auth/signin', [AuthController::class, 'signin']);
 
 
 Route::get('/seller-home', [SellerController::class, 'dashboard'])->name('seller.dashboard');

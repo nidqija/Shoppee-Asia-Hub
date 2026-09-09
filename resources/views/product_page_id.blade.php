@@ -93,7 +93,7 @@
                     <div class="w-7 h-7 rounded-full bg-orange-100 text-shopee flex items-center justify-center font-bold text-xs">
                         U
                     </div>
-                    <span class="text-xs font-semibold text-gray-700 hidden sm:inline">customer@example.com</span>
+                    <span class="text-xs font-semibold text-gray-700 hidden sm:inline" id="emailAddress"></span>
                 </div>
             </div>
         </div>
@@ -187,20 +187,7 @@
 
                     <!-- Variations & Options -->
                     <div class="space-y-3 pt-2 text-xs">
-                        <div class="flex items-center">
-                            <span class="w-24 text-gray-500 font-medium">Switch Type</span>
-                            <div class="flex gap-2 flex-wrap">
-                                <button type="button" class="px-3 py-1.5 border border-shopee text-shopee bg-orange-50/40 rounded-md font-semibold cursor-default">
-                                    Linear Red
-                                </button>
-                                <button type="button" class="px-3 py-1.5 border border-gray-200 text-gray-700 bg-white rounded-md hover:border-gray-300 cursor-default">
-                                    Tactile Brown
-                                </button>
-                                <button type="button" class="px-3 py-1.5 border border-gray-200 text-gray-700 bg-white rounded-md hover:border-gray-300 cursor-default">
-                                    Clicky Blue
-                                </button>
-                            </div>
-                        </div>
+                        
 
                         <div class="flex items-center">
                             <span class="w-24 text-gray-500 font-medium">Shipping</span>
@@ -228,16 +215,25 @@
 
                 <!-- Call to Action Buttons -->
                 <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-gray-100">
-                    <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Add To Cart
-                    </button>
-                    <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee text-white font-bold text-xs rounded-xl hover:bg-shopee-hover shadow-sm transition">
-                        Buy Now
-                    </button>
+                    
+
+                    @if ($isSeller)
+                        <div class="w-full py-3 px-4 bg-orange-50 border border-orange-200 text-shopee rounded-xl text-center font-semibold text-xs">
+                            You are the seller of this product listing.
+                        </div>
+                    @else
+                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            Add To Cart
+                        </button>
+
+                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee hover:bg-shopee-hover text-white font-bold text-xs rounded-xl transition">
+                            Buy Now
+                        </button>
+                    @endif
                 </div>
 
             </div>
@@ -262,7 +258,7 @@
             <div class="flex items-center gap-6 text-xs text-gray-600 border-t md:border-t-0 pt-3 md:pt-0 border-gray-100">
                 <div>
                     <span class="text-gray-400">Products:</span>
-                    <span class="font-bold text-gray-800 ml-1">142</span>
+                    <span class="font-bold text-gray-800 ml-1">{{ $product_count ?? 0 }}</span>
                 </div>
                 <div>
                     <span class="text-gray-400">Rating:</span>
@@ -340,6 +336,19 @@
             </div>
         </div>
     </footer>
+
+
+    <script>
+        const emailAddress = document.getElementById("emailAddress");
+        const localStorageEmail = localStorage.getItem("user_email");
+        const isSeller = {{ $isSeller ? 'true' : 'false' }};
+
+        console.log("Local Storage Email:", localStorageEmail); // Debugging line
+        console.log("Is Seller:", isSeller);
+
+        emailAddress.textContent = localStorageEmail ? localStorageEmail : "Unknown email";
+
+    </script>
 
 </body>
 
