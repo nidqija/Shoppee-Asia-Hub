@@ -26,7 +26,6 @@ Route::prefix('products')->group(function () {
 // Route registry for authentication related endpoints
 Route::prefix('auth')-> group(function() {
     Route::post('/signup' , [AuthController::class, 'signup']);
-    Route::post('/signin' , [AuthController::class, 'signin']);
 });
 
 // Route registry for product related endpoints

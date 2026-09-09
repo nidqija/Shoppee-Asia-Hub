@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -65,9 +66,12 @@ class AuthController extends Controller
                 'status' => 'error',
                 'message' => 'Invalid credentials',
             ], 401); // status code 401 for unauthorized
-        }
+        } 
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+
+        Auth::login($user);
+        $request->session()->regenerate();
+        $token = $user -> createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'status' => 'success',
@@ -77,6 +81,9 @@ class AuthController extends Controller
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ],
-        ], 200); // status code 200 for success
+        ], 200);
+
+
+       
     }
 }
