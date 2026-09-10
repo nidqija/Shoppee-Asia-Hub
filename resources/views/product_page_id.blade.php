@@ -284,7 +284,7 @@
                     </div>
                     <div class="flex">
                         <span class="w-32 text-gray-400">Warranty Period</span>
-                        <span class="text-gray-800 font-medium">12 Months Local Supplier</span>
+                        <span class="text-gray-800 font-medium">{{ $product->warranty_period }} Months</span>
                     </div>
                     <div class="flex">
                         <span class="w-32 text-gray-400">Connectivity</span>
@@ -343,8 +343,8 @@
         const localStorageEmail = localStorage.getItem("user_email");
         const isSeller = {{ $isSeller ? 'true' : 'false' }};
 
-        console.log("Local Storage Email:", localStorageEmail); // Debugging line
-        console.log("Is Seller:", isSeller);
+      /*  console.log("Local Storage Email:", localStorageEmail); // Debugging line
+        console.log("Is Seller:", isSeller); */
 
         emailAddress.textContent = localStorageEmail ? localStorageEmail : "Unknown email";
 
