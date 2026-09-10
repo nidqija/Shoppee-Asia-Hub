@@ -38,7 +38,9 @@
     <div class="bg-shopee text-white text-xs py-1.5 px-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-4 text-[11px] opacity-90">
-                <span>📍 Regional Hub: Malaysia (MYR)</span>
+                @if ($product->region_code == "MY")
+                    <span>📍 Regional Hub : Malaysia {{ $product->region_code }}</span>
+                @endif
                 <span>•</span>
                 <span>Free Shipping over RM 40</span>
             </div>
@@ -91,7 +93,7 @@
                     <div class="w-7 h-7 rounded-full bg-orange-100 text-shopee flex items-center justify-center font-bold text-xs">
                         U
                     </div>
-                    <span class="text-xs font-semibold text-gray-700 hidden sm:inline">customer@example.com</span>
+                    <span class="text-xs font-semibold text-gray-700 hidden sm:inline" id="emailAddress"></span>
                 </div>
             </div>
         </div>
@@ -104,11 +106,9 @@
         <nav class="flex items-center gap-2 text-xs text-gray-500">
             <a href="{{ url('/home') }}" class="hover:text-shopee">Home</a>
             <span>/</span>
-            <span class="hover:text-shopee">Electronics</span>
+            <span class="hover:text-shopee">{{ $product->category_slug }}</span>
             <span>/</span>
-            <span class="hover:text-shopee">Computer Accessories</span>
-            <span>/</span>
-            <span class="text-gray-900 font-medium truncate max-w-xs sm:max-w-md">Ergonomic Mechanical Keyboard (RGB Backlit)</span>
+            <span class="text-gray-900 font-medium truncate max-w-xs sm:max-w-md">{{ $product->title }}</span>
         </nav>
 
         <!-- Product Primary Card -->
@@ -158,7 +158,7 @@
                             <span class="text-xs text-gray-400 font-mono">SKU: PRD-8A4F12E9</span>
                         </div>
                         <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
-                            Ergonomic Mechanical Keyboard (RGB Backlit, Hot-Swappable Switches, Dual Mode Wireless)
+                            {{ $product->title }}
                         </h1>
                     </div>
 
@@ -180,27 +180,14 @@
 
                     <!-- Price Section -->
                     <div class="bg-gray-50/80 rounded-xl p-4 flex items-baseline gap-3">
-                        <span class="text-3xl font-extrabold text-shopee">RM 249.00</span>
+                        <span class="text-3xl font-extrabold text-shopee">RM {{ $product->price }}</span>
                         <span class="text-xs text-gray-400 line-through">RM 329.00</span>
                         <span class="text-xs font-bold text-shopee bg-orange-100 px-2 py-0.5 rounded">-24%</span>
                     </div>
 
                     <!-- Variations & Options -->
                     <div class="space-y-3 pt-2 text-xs">
-                        <div class="flex items-center">
-                            <span class="w-24 text-gray-500 font-medium">Switch Type</span>
-                            <div class="flex gap-2 flex-wrap">
-                                <button type="button" class="px-3 py-1.5 border border-shopee text-shopee bg-orange-50/40 rounded-md font-semibold cursor-default">
-                                    Linear Red
-                                </button>
-                                <button type="button" class="px-3 py-1.5 border border-gray-200 text-gray-700 bg-white rounded-md hover:border-gray-300 cursor-default">
-                                    Tactile Brown
-                                </button>
-                                <button type="button" class="px-3 py-1.5 border border-gray-200 text-gray-700 bg-white rounded-md hover:border-gray-300 cursor-default">
-                                    Clicky Blue
-                                </button>
-                            </div>
-                        </div>
+                        
 
                         <div class="flex items-center">
                             <span class="w-24 text-gray-500 font-medium">Shipping</span>
@@ -220,7 +207,7 @@
                                     <span class="px-3 py-1 font-semibold text-gray-800 border-x border-gray-200">1</span>
                                     <span class="px-3 py-1 text-gray-700 cursor-default">+</span>
                                 </div>
-                                <span class="text-gray-400 text-[11px]">84 units available</span>
+                                <span class="text-gray-400 text-[11px]">{{ $product->stock_quantity }} units available</span>
                             </div>
                         </div>
                     </div>
@@ -228,16 +215,25 @@
 
                 <!-- Call to Action Buttons -->
                 <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-gray-100">
-                    <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Add To Cart
-                    </button>
-                    <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee text-white font-bold text-xs rounded-xl hover:bg-shopee-hover shadow-sm transition">
-                        Buy Now
-                    </button>
+                    
+
+                    @if ($isSeller)
+                        <div class="w-full py-3 px-4 bg-orange-50 border border-orange-200 text-shopee rounded-xl text-center font-semibold text-xs">
+                            You are the seller of this product listing.
+                        </div>
+                    @else
+                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            Add To Cart
+                        </button>
+
+                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee hover:bg-shopee-hover text-white font-bold text-xs rounded-xl transition">
+                            Buy Now
+                        </button>
+                    @endif
                 </div>
 
             </div>
@@ -252,7 +248,7 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h2 class="text-sm font-bold text-gray-900">Official Tech Gear Store</h2>
+                        <h2 class="text-sm font-bold text-gray-900">{{ $product->seller?->email ?? 'Unknown Seller' }}</h2>
                         <span class="px-2 py-0.2 rounded bg-shopee text-white text-[10px] font-semibold">Mall</span>
                     </div>
                     <p class="text-xs text-gray-400 mt-0.5">Active 12 minutes ago • Certified Merchant</p>
@@ -262,7 +258,7 @@
             <div class="flex items-center gap-6 text-xs text-gray-600 border-t md:border-t-0 pt-3 md:pt-0 border-gray-100">
                 <div>
                     <span class="text-gray-400">Products:</span>
-                    <span class="font-bold text-gray-800 ml-1">142</span>
+                    <span class="font-bold text-gray-800 ml-1">{{ $product_count ?? 0 }}</span>
                 </div>
                 <div>
                     <span class="text-gray-400">Rating:</span>
@@ -284,11 +280,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-xs">
                     <div class="flex">
                         <span class="w-32 text-gray-400">Category</span>
-                        <span class="text-gray-800 font-medium">Electronics > Keyboards</span>
+                        <span class="text-gray-800 font-medium">{{ $product->category_slug }}</span>
                     </div>
                     <div class="flex">
                         <span class="w-32 text-gray-400">Warranty Period</span>
-                        <span class="text-gray-800 font-medium">12 Months Local Supplier</span>
+                        <span class="text-gray-800 font-medium">{{ $product->warranty_period }} Months</span>
                     </div>
                     <div class="flex">
                         <span class="w-32 text-gray-400">Connectivity</span>
@@ -315,7 +311,7 @@
             <div class="space-y-3 text-xs leading-relaxed text-gray-700">
                 <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wide">Product Description</h3>
                 <p>
-                    Experience typing bliss with our flagship <strong>Ergonomic Mechanical Keyboard</strong>. Engineered for enthusiasts, software developers, and gamers who demand responsive keystrokes, exceptional ergonomics, and deep acoustics.
+                    {{ $product->description }}
                 </p>
                 <div class="space-y-1.5 pl-4 list-disc">
                     <p>• <strong>Factory Lubed Switches:</strong> Ultra-smooth linear switches out of the box with zero ping or scratchiness.</p>
@@ -340,6 +336,19 @@
             </div>
         </div>
     </footer>
+
+
+    <script>
+        const emailAddress = document.getElementById("emailAddress");
+        const localStorageEmail = localStorage.getItem("user_email");
+        const isSeller = {{ $isSeller ? 'true' : 'false' }};
+
+      /*  console.log("Local Storage Email:", localStorageEmail); // Debugging line
+        console.log("Is Seller:", isSeller); */
+
+        emailAddress.textContent = localStorageEmail ? localStorageEmail : "Unknown email";
+
+    </script>
 
 </body>
 

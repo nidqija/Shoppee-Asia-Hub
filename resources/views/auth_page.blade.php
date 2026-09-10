@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Store') }} - Sign In & Sign Up</title>
 
     <!-- Fonts -->
@@ -328,6 +329,7 @@
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const submitButton = document.getElementById('loginBtn');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
             submitDisabled = true;
             submitButton.textContent = 'Signing In...';
@@ -335,9 +337,11 @@
             try {
                 const response = await fetch('api/auth/signin', {
                     method: 'POST',
+                    credentials : 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN' : csrfToken  
                     },
                     body: JSON.stringify({
                         email: email,
@@ -350,6 +354,7 @@
                 if (response.ok) {
                     showAlert('Logged in successfully!', false);
                     localStorage.setItem('auth_token', result.data.access_token);
+                    localStorage.setItem('user_email', result.data.user.email); // Fixes Local Storage Email: null
                     localStorage.setItem('id', result.data.user.id);
                     localStorage.setItem('user', JSON.stringify(result.data.user));
                     localStorage.setItem('home_region', result.data.user.home_region || 'MY');
