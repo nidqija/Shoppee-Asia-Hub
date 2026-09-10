@@ -20,6 +20,7 @@ class Product extends Model {
         'stock_quantity',
         'status',
         'region_code',
+        'warranty_period',
         'seller_id',
     ];
 
