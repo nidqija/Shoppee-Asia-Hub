@@ -222,7 +222,7 @@
                             You are the seller of this product listing.
                         </div>
                     @else
-                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
+                        <button id="add-to-cart" type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee-light text-shopee border border-shopee font-bold text-xs rounded-xl hover:bg-orange-100 transition flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -230,9 +230,9 @@
                             Add To Cart
                         </button>
 
-                        <button type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee hover:bg-shopee-hover text-white font-bold text-xs rounded-xl transition">
+                        <a href="/checkout-page-id/{{ $product->id }}/{{ $product->region_code }}" type="button" class="w-full sm:flex-1 py-3 px-6 bg-shopee hover:bg-shopee-hover text-white font-bold text-xs rounded-xl transition">
                             Buy Now
-                        </button>
+                        </a>
                     @endif
                 </div>
 
@@ -341,12 +341,27 @@
     <script>
         const emailAddress = document.getElementById("emailAddress");
         const localStorageEmail = localStorage.getItem("user_email");
+        const regionCode = "{{ $product->region_code }}";
         const isSeller = {{ $isSeller ? 'true' : 'false' }};
 
       /*  console.log("Local Storage Email:", localStorageEmail); // Debugging line
         console.log("Is Seller:", isSeller); */
 
         emailAddress.textContent = localStorageEmail ? localStorageEmail : "Unknown email";
+
+
+
+        const addToCartButton = document.getElementById("add-to-cart");
+
+        
+        addToCartButton.addEventListener("click" , function() {
+            try {
+                console.log("Add to Cart button clicked");
+                
+            } catch (error) {
+                console.error("Error adding to cart:", error);
+            }
+        });
 
     </script>
 
