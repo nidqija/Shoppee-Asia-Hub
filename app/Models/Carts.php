@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class PaymentOrder extends Model {
+class Carts extends Model {
 
 
     use HasUuids;
 
     protected $fillable = [
         'user_id',
-        'product_id',
-        'status',
-        'total_item',
-        'price',
-        'user_id'
+        'session_id',
+        'currency',
+        'created_at',
     ];
 
     // function to map the user id to a user name from User Model

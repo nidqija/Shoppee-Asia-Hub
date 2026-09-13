@@ -5,6 +5,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PaymentOrderController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('auth_page');
@@ -25,4 +26,4 @@ Route::get('/seller-home', [SellerController::class, 'dashboard'])->name('seller
 
 Route::get('/product-page-id/{productId}', [ProductController::class, 'renderbyId'])->name('product.renderbyId');
 Route::get('/checkout-page-id/{productId}/{regionCode}', [PaymentOrderController::class, 'renderCheckoutPage'])->name('product.renderCheckoutPage');
-
+Route::get('/cart-page', [CartController::class, 'renderCartPage'])->name('cart.renderCartPage');
