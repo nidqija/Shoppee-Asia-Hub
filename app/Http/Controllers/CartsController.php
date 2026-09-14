@@ -18,7 +18,7 @@ class CartsController extends Controller {
     
 
 
-    public function store(Request $request) : JsonResponse {
+    public function addToCart(Request $request) : JsonResponse {
         
 
         $validated = $request->validate([
@@ -55,7 +55,6 @@ class CartsController extends Controller {
 
         $cart = Carts::firstOrCreate([
             'user_id' => $user ? $user->id : null,
-            'session_id' => $sessionId,
         ]); 
 
 
