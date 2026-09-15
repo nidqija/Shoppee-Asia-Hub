@@ -29,6 +29,13 @@ class CartItems extends Model {
         return $this -> belongsTo(Product::class , 'product_id');
     }
 
+
+    // function to get the checkout item amount
+    public function getCheckoutItemAmount($productId) : int {
+        $cartItem = $this->where('product_id', $productId)->count();
+        return $cartItem ? $cartItem : 0;
+    }
+
     
 }
 
