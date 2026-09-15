@@ -30,7 +30,9 @@ class CartsController extends Controller {
 
 
         $user = $request->user();
-        $sessionId = $request->session()->getId();
+
+        // get the session id from an authorized user
+        $sessionId = $request->hasSession() ? $request->session()->getId() : null;
 
 
         if(!$user && !$sessionId){
@@ -80,7 +82,7 @@ class CartsController extends Controller {
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Product added to cart successfully',
+                'message' => `Product added to cart successfully {$validated['quantity']} x {$product->name} at {$product->price} {$validated['currency']}`,
             ]);
         }
 
