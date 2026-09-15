@@ -85,7 +85,7 @@
                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <span class="absolute top-1 right-1 bg-shopee text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                        2
+                        {{ $checkout_item->count() ?? 0 }}
                     </span>
                 </div>
 
@@ -344,7 +344,7 @@
         const regionCode = "{{ $product->region_code }}";
         const isSeller = {{ $isSeller ? 'true' : 'false' }};
 
-      /*  console.log("Local Storage Email:", localStorageEmail); // Debugging line
+        /*  console.log("Local Storage Email:", localStorageEmail); // Debugging line
         console.log("Is Seller:", isSeller); */
 
         emailAddress.textContent = localStorageEmail ? localStorageEmail : "Unknown email";
@@ -353,10 +353,43 @@
 
         const addToCartButton = document.getElementById("add-to-cart");
 
+
+            
         
-        addToCartButton.addEventListener("click" , function() {
+        addToCartButton.addEventListener("click" , async function() {
+
+
+           
+
             try {
-                console.log("Add to Cart button clicked");
+                
+                const token =localStorage.getItem("auth_token");
+                const currency = "{{ $product->region_code === 'MY' ? 'MYR' : 'SGD' }}"
+                const response = await fetch("/api/products/add-to-cart",{
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization" : `Bearer ${token}`, // personal access token to ensure the request is coming from an actual user
+                        "X-Region" : regionCode, // used to detect what region the user is in session with
+                    },
+                    body: JSON.stringify({
+                        product_id: "{{ $product->id }}",
+                        quantity: 1,
+                        currency: currency,
+                    }),
+                });
+
+
+                const data = await response.json()
+
+                if(response.ok){
+                    console.log(data.message || "Product added to cart: ")
+                    alert(data.message || "Product added to cart successfully.")
+                } else {
+                    console.log(data.message || "Failed to add product to cart.")
+                    alert(data.message || "Failed to add product to cart.")
+                }
                 
             } catch (error) {
                 console.error("Error adding to cart:", error);
