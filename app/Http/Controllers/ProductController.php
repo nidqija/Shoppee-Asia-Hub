@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItems;
 use App\Models\Product;
 use App\Models\Carts;
 use Illuminate\Http\Request;
@@ -34,12 +35,11 @@ class ProductController extends Controller{
         $isSeller = $user !== null && ($user->id === $product->seller_id);
 
 
-        // get the checkout item amountj
-        $checkout_item = Carts::where('user_id', $user ? $user->id : null)
-            ->with(['cartItems' => function ($query) use ($product) {
-                $query->where('product_id', $product->id);
-            }]);
+        // get the cart of the user 
+        $cart = $user ? Carts::where('user_id' , $user->id )->first() : null;
 
+        // get the item amount from the user cart
+        $cart_item_count = $cart ? CartItems::where('cart_id' , $cart->id)->sum('quantity') : 0;
 
         
 
@@ -51,7 +51,7 @@ class ProductController extends Controller{
         
 
         // call the view with the product and product count payload
-        return view('product_page_id' , compact('product', 'product_count' , 'isSeller' , 'checkout_item'));
+        return view('product_page_id' , compact('product', 'product_count' , 'isSeller' , 'cart_item_count'));
     }
 
    
