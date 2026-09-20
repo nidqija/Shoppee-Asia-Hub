@@ -28,7 +28,8 @@ class Carts extends Model {
     public function cartItems() : HasMany{
         return $this->hasMany(CartItems::class, 'cart_id');
     }
-    
+
+
 }
 
 
