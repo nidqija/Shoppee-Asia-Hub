@@ -36,6 +36,13 @@ class CartItems extends Model {
         return $cartItem ? $cartItem : 0;
     }
 
+    // function to get the product name by mapping through cart items to product model
+    public function product() : BelongsTo{
+        return $this -> belongsTo(Product::class , 'product_id');
+    }
+
+    
+
     
 }
 

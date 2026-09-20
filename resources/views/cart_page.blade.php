@@ -107,83 +107,54 @@
                 <span class="text-gray-400 font-normal">| Chat Now</span>
             </div>
 
-            <!-- Product Row 1 -->
-            <div class="cart-item grid grid-cols-12 gap-4 p-6 items-center border-b border-gray-100 text-xs" data-price="249.00" data-id="1">
-                <div class="col-span-12 md:col-span-6 flex items-start gap-4">
-                    <input type="checkbox" class="item-select accent-shopee w-4 h-4 mt-2 rounded cursor-pointer" checked>
-                    <div class="w-16 h-16 rounded-lg bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" />
-                        </svg>
+            @forelse ($cart_items as $item)
+                <!-- Dynamic Product Row -->
+                <div class="cart-item grid grid-cols-12 gap-4 p-6 items-center border-b border-gray-100 text-xs" 
+                     data-price="{{ $item->price }}" 
+                     data-id="{{ $item->id }}">
+                    <div class="col-span-12 md:col-span-6 flex items-start gap-4">
+                        <input type="checkbox" class="item-select accent-shopee w-4 h-4 mt-2 rounded cursor-pointer" checked>
+                        <div class="w-16 h-16 rounded-lg bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" />
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="font-medium text-gray-900 leading-snug line-clamp-2">
+                                {{ $item->product->title ?? 'Product unavailable' }}
+                            </p>
+                            <p class="text-gray-400 text-[11px]">
+                                Category: {{ $item->product->category_slug ?? 'General' }}
+                            </p>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <p class="font-medium text-gray-900 leading-snug line-clamp-2">
-                            Ergonomic Wireless Mechanical Keyboard (RGB Hot-Swappable 5-Pin Gasket Mount)
-                        </p>
-                        <p class="text-gray-400 text-[11px]">Variation: Pre-lubed Linear / Classic Grey</p>
+
+                    <div class="col-span-4 md:col-span-2 text-left md:text-center text-gray-700">
+                        <span class="md:hidden text-gray-400">Unit: </span>RM <span class="unit-price">{{ number_format($item->price, 2) }}</span>
                     </div>
-                </div>
 
-                <div class="col-span-4 md:col-span-2 text-left md:text-center text-gray-700">
-                    <span class="md:hidden text-gray-400">Unit: </span>RM <span class="unit-price">249.00</span>
-                </div>
-
-                <div class="col-span-4 md:col-span-2 flex justify-center items-center">
-                    <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                        <button type="button" class="btn-qty-minus px-2.5 py-1 text-gray-600 hover:bg-gray-100">-</button>
-                        <input type="text" value="1" class="qty-input w-10 py-1 text-center text-xs font-semibold focus:outline-none border-x border-gray-200" readonly>
-                        <button type="button" class="btn-qty-plus px-2.5 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                    <div class="col-span-4 md:col-span-2 flex justify-center items-center">
+                        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button type="button" class="btn-qty-minus px-2.5 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                            <input type="text" value="{{ $item->quantity }}" class="qty-input w-10 py-1 text-center text-xs font-semibold focus:outline-none border-x border-gray-200" readonly>
+                            <button type="button" class="btn-qty-plus px-2.5 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-span-4 md:col-span-1 text-center font-bold text-shopee">
-                    RM <span class="row-total">249.00</span>
-                </div>
-
-                <div class="col-span-12 md:col-span-1 text-right">
-                    <button type="button" class="btn-delete text-gray-400 hover:text-shopee text-xs transition">Delete</button>
-                </div>
-            </div>
-
-            <!-- Product Row 2 -->
-            <div class="cart-item grid grid-cols-12 gap-4 p-6 items-center border-b border-gray-100 text-xs" data-price="45.00" data-id="2">
-                <div class="col-span-12 md:col-span-6 flex items-start gap-4">
-                    <input type="checkbox" class="item-select accent-shopee w-4 h-4 mt-2 rounded cursor-pointer" checked>
-                    <div class="w-16 h-16 rounded-lg bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                        </svg>
+                    <div class="col-span-4 md:col-span-1 text-center font-bold text-shopee">
+                        RM <span class="row-total">{{ number_format($item->price * $item->quantity, 2) }}</span>
                     </div>
-                    <div class="space-y-1">
-                        <p class="font-medium text-gray-900 leading-snug line-clamp-2">
-                            Custom Coiled USB-C Keyboard Aviator Cable (Reinforced Braided)
-                        </p>
-                        <p class="text-gray-400 text-[11px]">Variation: Matte Black / 1.5m</p>
+
+                    <div class="col-span-12 md:col-span-1 text-right">
+                        <button type="button" class="btn-delete text-gray-400 hover:text-shopee text-xs transition">Delete</button>
                     </div>
                 </div>
-
-                <div class="col-span-4 md:col-span-2 text-left md:text-center text-gray-700">
-                    <span class="md:hidden text-gray-400">Unit: </span>RM <span class="unit-price">45.00</span>
+            @empty
+                <div class="p-8 text-center text-gray-500 text-xs">
+                    Your cart is empty.
                 </div>
-
-                <div class="col-span-4 md:col-span-2 flex justify-center items-center">
-                    <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                        <button type="button" class="btn-qty-minus px-2.5 py-1 text-gray-600 hover:bg-gray-100">-</button>
-                        <input type="text" value="1" class="qty-input w-10 py-1 text-center text-xs font-semibold focus:outline-none border-x border-gray-200" readonly>
-                        <button type="button" class="btn-qty-plus px-2.5 py-1 text-gray-600 hover:bg-gray-100">+</button>
-                    </div>
-                </div>
-
-                <div class="col-span-4 md:col-span-1 text-center font-bold text-shopee">
-                    RM <span class="row-total">45.00</span>
-                </div>
-
-                <div class="col-span-12 md:col-span-1 text-right">
-                    <button type="button" class="btn-delete text-gray-400 hover:text-shopee text-xs transition">Delete</button>
-                </div>
-            </div>
+            @endforelse
 
         </div>
 
