@@ -92,10 +92,17 @@ class CartsController extends Controller {
         ]);
     }
 
-    public function renderCartPage(Request $request) : View{
+    public function renderCartPage(Request $request , string $id) : View{
     
 
-        return view('cart_page');
+        $cart = Carts::where('id', $id)->firstOrFail();
+
+        $cart_items = CartItems::with('product')
+        ->where('cart_id' , $cart->id)
+        ->get();
+
+        
+        return view('cart_page' , compact('cart_items' , 'cart'));
     }
 }
 ?>

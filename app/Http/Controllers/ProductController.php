@@ -41,6 +41,9 @@ class ProductController extends Controller{
         // get the item amount from the user cart
         $cart_item_count = $cart ? CartItems::where('cart_id' , $cart->id)->sum('quantity') : 0;
 
+
+        $cart_id = $cart ? $cart->id : null;
+
         
 
 
@@ -51,7 +54,7 @@ class ProductController extends Controller{
         
 
         // call the view with the product and product count payload
-        return view('product_page_id' , compact('product', 'product_count' , 'isSeller' , 'cart_item_count'));
+        return view('product_page_id' , compact('product', 'product_count' , 'isSeller' , 'cart_item_count' , 'cart_id'));
     }
 
    
