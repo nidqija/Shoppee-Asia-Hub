@@ -279,8 +279,58 @@
         emailAddress.textContent = localStorageEmail ? localStorageEmail : "buyer@shopee.my";
 
         const placeOrderBtn = document.getElementById("place-order-button");
-        placeOrderBtn.addEventListener("click", () => {
-            alert("Order placed successfully! (Static demo)");
+
+
+        placeOrderBtn.addEventListener("click", async () => {
+            
+
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.innerText = "Processing Payment...";
+
+
+            try {
+                // gather payload to be sent to the api created in api.php
+                // use compact view to get the $product and $regionCode values to be sent as payload
+                const payload = {
+                    product_id : "{{ $product->id }}",
+                    amount: {{ $regionCode === 'SG' ? $product->price * 0.32 : $product->price }},
+                    currency : "{{ $regionCode === 'SG' ? 'SGD' : 'MYR' }}",
+                    email : localStorage.getItem("user_email") || 'buyer@shoppee.com'
+
+                };
+
+                // fetch the api to perform a transaction
+                const response = await fetch("/api/payments/create-invoice" , {
+                    method : "POST",
+                    headers : {
+                        "Content-Type" : "application/json",
+                        "Accept" : "application/json",
+                        "X-CSRF-TOKEN" : "{{ csrf_token() }}" // csrf token for verifying that the request is from our server
+                    },
+                    body : JSON.stringify(payload)
+                });
+
+
+                // get the response from the api
+                const data = await response.json();
+
+                // if response was successful , redirect user to invoice url
+                if (response.ok && data.invoice_url) {
+                    window.location.href = data.invoice_url;
+                } else {
+
+                    // if fails , return error message
+                    alert(data.message || "Payment initiation failed , please try again")
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.innerText = "Place Order";
+                }
+                
+            } catch ( err) {
+                console.log(err);
+                alert("Something went wrong!");
+                placeOrderBtn.disabled=false;
+                placeOrderBtn.innerText =" Place Order";
+            }
         });
     </script>
 </body>
