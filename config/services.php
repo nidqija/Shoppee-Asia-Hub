@@ -14,6 +14,9 @@ return [
     |
     */
 
+    // acts as a middle layer service between laravel code and third-party services
+    
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
@@ -34,5 +37,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
+    
+    'xendit' => [
+        'secret_key' => env('XENDIT_SECRET_KEY'),
+        'public_key' => env('XENDIT_PUBLIC_KEY'),
+    ]
 
 ];
