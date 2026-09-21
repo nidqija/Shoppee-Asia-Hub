@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
@@ -28,15 +29,24 @@ Route::prefix('products')->group(function () {
 
 
 // Route registry for authentication related endpoints
-Route::prefix('auth')-> group(function() {
-    Route::post('/signup' , [AuthController::class, 'signup']);
+Route::prefix('auth')->group(function () {
+    Route::post('/signup', [AuthController::class, 'signup']);
 });
 
 // Route registry for product related endpoints
-Route::prefix('products') -> group(function() {
-    Route::get('/' , [ProductController::class, 'index']);
-    Route::get('/global' , [ProductController::class, 'indexGlobal']);
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/global', [ProductController::class, 'indexGlobal']);
 });
+
+
+// these two endpoints are necessary for payment integration
+Route::post('/payments/create-invoice', [PaymentOrderController::class, 'createInvoice']);
+Route::post('/payments/payment-webhook', [PaymentOrderController::class, 'handleWebhook']);
+
+
+
+
 
 
 

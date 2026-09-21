@@ -27,3 +27,8 @@ Route::get('/seller-home', [SellerController::class, 'dashboard'])->name('seller
 Route::get('/product-page-id/{productId}', [ProductController::class, 'renderbyId'])->name('product.renderbyId');
 Route::get('/checkout-page-id/{productId}/{regionCode}', [PaymentOrderController::class, 'renderCheckoutPage'])->name('product.renderCheckoutPage');
 Route::get('/cart-page/{cartId}', [CartsController::class, 'renderCartPage'])->name('cart.renderCartPage');
+
+
+Route::get('/payment-success', [PaymentOrderController::class, 'handlePaymentSuccess'])->name('payment.success');
+Route::get('/payment-failure' , [PaymentOrderController::class, 'handlePaymentFailure'])->name('payment.failure');
+
