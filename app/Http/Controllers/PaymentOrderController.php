@@ -88,8 +88,20 @@ class PaymentOrderController extends Controller{
         }
 
 
-        public function handleWebhook(Request $request) {
-            
+        public function handlePaymentSuccess(Request $request): View
+        {
+            return view('payment_success');
+        }
+
+        public function handlePaymentFailure(Request $request): View
+        {
+            return view('payment_failure');
+        }
+
+        public function handleWebhook(Request $request)
+        {
+            // Webhook handler for payment gateway notification
+            return response()->json(['status' => 'received'], 200);
         }
 
 
