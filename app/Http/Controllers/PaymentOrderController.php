@@ -185,7 +185,7 @@ class PaymentOrderController extends Controller{
                     if ($order->status !== 'PAID'){
                         $order->update([
                             'status' => 'PAID',
-                            'paid_status' => 'FINISHED',
+                            'payment_status' => 'FINISHED',
                             'payment_method' => $paymentMethod,
                             'paid_amount' => $paidAmount,
                             'paid_at' => $paidAt,
