@@ -175,3 +175,8 @@ git commit -m "feat: sharded multi-region product and auth setup"
   <Elicitation label="Create a custom Artisan command to migrate all shards in one go" query="Create a custom Artisan command `php artisan app:migrate-all` to run migrations across central and all regional shard databases."/>
 </ElicitationsGroup>
 ```
+
+
+## 5. Cloudflared Tunnels
+cloudflared tunnel --protocol http2 --url http://localhost:8000
+

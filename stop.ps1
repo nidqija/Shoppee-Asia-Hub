@@ -48,8 +48,19 @@ if ($stoppedLaravel) {
     Write-Host "No active Laravel server found on port 8000." -ForegroundColor DarkGray
 }
 
-# Step 2: Stop Docker Compose services
-Write-Host "`n[2/2] Stopping Docker Compose services (Postgres, Mailpit)..." -ForegroundColor Yellow
+# Step 2: Stop Cloudflare Tunnel
+Write-Host "`n[2/3] Stopping Cloudflare tunnel..." -ForegroundColor Yellow
+$cloudflaredProcesses = Get-Process -Name "cloudflared" -ErrorAction SilentlyContinue
+
+if ($cloudflaredProcesses) {
+    $cloudflaredProcesses | Stop-Process -Force -ErrorAction SilentlyContinue
+    Write-Host "Cloudflare tunnel stopped successfully." -ForegroundColor Green
+} else {
+    Write-Host "No active Cloudflare tunnel processes found." -ForegroundColor DarkGray
+}
+
+# Step 3: Stop Docker Compose services
+Write-Host "`n[3/3] Stopping Docker Compose services (Postgres, Mailpit)..." -ForegroundColor Yellow
 docker compose stop
 
 if ($LASTEXITCODE -eq 0) {
