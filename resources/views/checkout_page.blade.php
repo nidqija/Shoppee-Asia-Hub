@@ -78,6 +78,13 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
 
+        @php
+            $qty = (int) ($quantity ?? request('query', request('quantity', 1)));
+            if ($qty < 1) $qty = 1;
+            $unitPrice = $regionCode == 'SG' ? $product->price * 0.32 : $product->price;
+            $totalPrice = $unitPrice * $qty;
+        @endphp
+
         <!-- Delivery Address Card -->
         <div class="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
             <div class="h-1 bg-[repeating-linear-gradient(45deg,#ee4d2d,#ee4d2d_30px,#fff_30px,#fff_40px,#4080ff_40px,#4080ff_70px,#fff_70px,#fff_80px)]"></div>
@@ -114,7 +121,7 @@
             <!-- Shop Info -->
             <div class="px-6 py-3 bg-gray-50/70 border-b border-gray-100 flex items-center gap-2 text-xs font-semibold text-gray-800">
                 <span class="px-1.5 py-0.5 rounded bg-shopee text-white text-[10px] font-bold">Mall</span>
-                <span>ErgoKeys Official Store</span>
+                <span>{{ $product->seller?->email ?? 'ErgoKeys Official Store' }}</span>
                 <span class="text-gray-400 font-normal">| Chat Now</span>
             </div>
 
@@ -129,16 +136,21 @@
                     </div>
                     <div class="space-y-1">
                         <p class="font-medium text-gray-900 leading-snug line-clamp-2">
-                            Ergonomic Wireless Mechanical Keyboard (RGB Hot-Swappable 5-Pin Gasket Mount)
+                            {{ $product->title }}
                         </p>
-                        <p class="text-gray-400 text-[11px]">Variation: Pre-lubed Linear / Classic Grey</p>
+                        <p class="text-gray-400 text-[11px]">Category: {{ $product->category_slug }}</p>
                     </div>
                 </div>
                 <div class="col-span-4 md:col-span-2 text-left md:text-center text-gray-700">
-                    <span class="md:hidden text-gray-400">Unit: </span>RM {{ $product->price }}
+                    <span class="md:hidden text-gray-400">Unit: </span>
+                    @if ($regionCode == "MY")
+                        RM {{ number_format($product->price, 2) }}
+                    @elseif ($regionCode == "SG")
+                        SGD {{ number_format($product->price * 0.32, 2) }}
+                    @endif
                 </div>
                 <div class="col-span-4 md:col-span-2 text-center text-gray-700">
-                    <span class="md:hidden text-gray-400">Qty: </span>1
+                    <span class="md:hidden text-gray-400">Qty: </span>{{ $quantity }}
                 </div>
                 <div class="col-span-4 md:col-span-2 text-right font-bold text-gray-900">
 
@@ -165,8 +177,16 @@
 
             <!-- Order Total for shop -->
             <div class="px-6 py-4 flex justify-between md:justify-end items-center gap-4 text-xs bg-gray-50/40">
-                <span class="text-gray-500">Order Total (1 item):</span>
-                <span class="text-base font-bold text-shopee">RM 249.00</span>
+                <span class="text-gray-500">Order Total ({{ $quantity }} Item)</span>
+                <span class="text-base font-bold text-shopee">
+                    
+                    @if ($regionCode == "MY")
+                        RM {{ $product->price }}
+                    @elseif ($regionCode == "SG")
+                        SGD {{ $product->price * 0.32 }}
+                    @endif
+
+                </span>
             </div>
         </div>
 
@@ -220,23 +240,37 @@
             <div class="flex flex-col items-end space-y-2 text-xs text-gray-600">
                 <div class="flex justify-between w-full sm:w-72">
                     <span>Merchandise Subtotal:</span>
-                    <span class="text-gray-900 font-medium">RM 249.00</span>
+                    <span class="text-gray-900 font-medium">
+                        
+                    @if ($regionCode == "MY")
+                        RM {{ $product->price }}
+                    @elseif ($regionCode == "SG")
+                        SGD {{ $product->price * 0.32 }}
+                    @endif
+                    </span>
                 </div>
                 <div class="flex justify-between w-full sm:w-72">
                     <span>Shipping Total:</span>
-                    <span class="text-gray-900 font-medium">RM 4.90</span>
+                    <span class="text-gray-900 font-medium">None</span>
                 </div>
                 <div class="flex justify-between w-full sm:w-72">
                     <span>Shipping Discount Subtotal:</span>
-                    <span class="text-emerald-600 font-medium">-RM 4.90</span>
+                    <span class="text-emerald-600 font-medium">None</span>
                 </div>
                 <div class="flex justify-between w-full sm:w-72">
                     <span>Voucher Discount:</span>
-                    <span class="text-emerald-600 font-medium">-RM 10.00</span>
+                    <span class="text-emerald-600 font-medium">None</span>
                 </div>
                 <div class="flex justify-between w-full sm:w-72 pt-3 border-t border-gray-100 items-baseline">
                     <span class="text-sm font-semibold text-gray-900">Total Payment:</span>
-                    <span class="text-2xl font-extrabold text-shopee">RM 239.00</span>
+                    <span class="text-2xl font-extrabold text-shopee">
+                        
+                    @if ($regionCode == "MY")
+                        RM {{ $product->price }}
+                    @elseif ($regionCode == "SG")
+                        SGD {{ $product->price * 0.32 }}
+                    @endif
+                    </span>
                 </div>
             </div>
 
