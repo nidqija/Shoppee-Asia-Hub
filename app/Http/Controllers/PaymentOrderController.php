@@ -29,7 +29,9 @@ class PaymentOrderController extends Controller{
             
         }
 
-        return view('checkout_page' , compact('product' , 'regionCode'));
+        $quantity = max(1, (int) $request->query('quantity', 1));
+
+        return view('checkout_page' , compact('product' , 'regionCode', 'quantity'));
 
     }
 
